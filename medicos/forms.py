@@ -2,7 +2,6 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from phonenumber_field import formfields
-from phonenumber_field.widgets import PhonePrefixSelect
 
 from django.contrib.auth.models import User
 from .models import Medico
