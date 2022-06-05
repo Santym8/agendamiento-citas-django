@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agedamiento de Citas</title>
+    <link rel="stylesheet" href="{% static 'medicos/registro.css' %}">
+</head>
+
+<body>
+    <form action="" method="post">
+        {% csrf_token %} {% for campo in form_usuario %}
+        <div>
+            {{ campo.errors }}
+            <br> {{ campo.label_tag }}
+            <br> {{ campo }}
+        </div>
+        {% endfor %} {% for campo in form_medico %}
+        <div>
+            {{ campo.errors }}
+            <br> {{ campo.label_tag }}
+            <br> {{ campo }}
+        </div>
+        {% endfor %}
+
+
+
+
+        <input type="submit" value="Enviar" style=" width: 150px;">
+    </form>
+</body>
+
+</html>
