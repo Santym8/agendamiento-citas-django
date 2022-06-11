@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
+
 class Especialidad(models.Model):
     nombre = models.CharField('Nombre',max_length=30)
 
@@ -13,5 +14,5 @@ class Medico(models.Model):
     fecha_nacimiento = models.DateField('Fecha nacimiento')
     numero_celular = PhoneNumberField('Numero Celular')
     especialidad = models.ForeignKey(Especialidad, on_delete=models.CASCADE)
-    titulo_acreditacion_medica = models.FileField('Titulo',upload_to='archivos/titulos')
+    titulo_acreditacion_medica = models.FileField('Titulo',upload_to='static/titulos')
     verificado = models.BooleanField(default=False)
