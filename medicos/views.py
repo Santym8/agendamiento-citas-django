@@ -18,7 +18,6 @@ def registro(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         medico_form = MedicoForm(request.POST, request.FILES)
-        print(request.FILES)
         if user_form.is_valid() and medico_form.is_valid():
             #Guarda usuario
             send_verification_email(request, user_form)
