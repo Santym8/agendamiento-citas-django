@@ -1,0 +1,71 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.content {
+  width: 85%;
+  padding-top: 140px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.header-registro-medicos h1 {
+  text-align: center;
+}
+
+.header-registro-medicos p {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.content-registro {
+  display: flex;
+  /* flex-wrap: wrap; */
+}
+
+input {
+  display: block;
+  height: 42px;
+  border: 1px solid #8c2626;
+  border-radius: 7px;
+  width: 100%;
+  padding: 10px 15px;
+  color: #111;
+  transition: all 0.3s ease;
+}
+
+.content-registro div {
+  width: 100%;
+  margin: 25px;
+  position: relative;
+}
+
+.content-registro label {
+  font-family: "Montserrat", sans-serif;
+  display: block;
+  font-size: 15px;
+  font-weight: 200;
+  color: rgb(52, 52, 52);
+  margin-bottom: 3px;
+}
+
+@media screen and(min-width: 992px) {
+  .content-registro div {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .content-registro {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 576px) {
+  .content-registro {
+    max-width: 540px;
+  }
+}
