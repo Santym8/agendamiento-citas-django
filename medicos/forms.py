@@ -22,6 +22,7 @@ class UserForm(forms.ModelForm):
             'username': 'Cédula',
         }
 
+    verificar_contraseña = forms.CharField(required=True)
     #Verifica que la cedula(username) sea válida
     def clean_username(self):
         data = self.cleaned_data['username']
@@ -75,7 +76,14 @@ class UserForm(forms.ModelForm):
             raise ValidationError('Correo electrónico en uso')
         return data
 
-
+    #Verifica confirmacion contraseña
+    def clean_verificar_contraseña(self):
+        contraseña = self.cleaned_data['password']
+        confirmar_contraseña = self.cleaned_data['verificar_contraseña']
+        if contraseña != confirmar_contraseña:
+            raise ValidationError('No coinciden contraseñas')
+        return confirmar_contraseña
+        
 #-------------------------------Fomrulario Medicos---------------------------
 class MedicoForm(forms.ModelForm):
     class Meta:
