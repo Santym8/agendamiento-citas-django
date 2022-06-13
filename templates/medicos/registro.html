@@ -7,46 +7,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agedamiento de Citas</title>
-    <link rel="stylesheet" href="{% static '\css\registro.css' %}" />
+    <link rel="stylesheet" href="{% static '\medicos\registro.css' %}" />
   </head>
 
   <body>
-    <div class="content">
-      <div class="header-registro-medicos">
-        <h1>Registro Médicos</h1>
-        <div class="header__descripcion">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio,
-            beatae, tempora explicabo dolorem laborum amet nam alias rerum
-            sapiente deserunt ullam, quas laudantium harum molestias facere
-            mollitia hic fugiat animi!
-          </p>
-        </div>
+    <div class="registro-total">
+      <div class="img-encabezado">
+        <img
+          id="Imagen-Medico"
+          src="{% static '\medicos\img\contact-shape3.png' %}"
+          alt=""
+        />
       </div>
-      <div class="content-registro">
-        <form action="" method="post" enctype="multipart/form-data">
-          <div class="User">
-            {% csrf_token %} {% for campo in form_usuario %}
-            <div>
-              {{ campo.errors }}
-              <br />
-              {{ campo.label_tag }} <br />
-              {{ campo }}
-            </div>
-            {% endfor %}
+      <div class="content">
+        <div class="header-registro-medicos">
+          <h1>Registro Médicos</h1>
+          <div class="header__descripcion">
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio,
+              beatae, tempora explicabo dolorem laborum amet nam alias rerum
+              sapiente deserunt ullam, quas laudantium harum molestias facere
+              mollitia hic fugiat animi!
+            </p>
           </div>
-          <div class="Medico">
-            {% for campo in form_medico %}
-            <div>
-              {{ campo.errors }}
-              <br />
-              {{ campo.label_tag }} <br />
-              {{ campo }}
+        </div>
+        <div class="content-registro">
+          <form action="" method="post" enctype="multipart/form-data">
+            <div class="Todo">
+              <div class="User">
+                {% csrf_token %} {% for campo in form_usuario %}
+                <div>
+                  {{ campo.errors }}
+                  <br />
+                  {{ campo.label_tag }} <br />
+                  {{ campo }}
+                </div>
+                {% endfor %}
+              </div>
+              <div class="Medico">
+                {% for campo in form_medico %}
+                <div>
+                  {{ campo.errors }}
+                  <br />
+                  {{ campo.label_tag }} <br />
+                  {{ campo }}
+                </div>
+                {% endfor %}
+              </div>
             </div>
-            {% endfor %}
-          </div>
-          <input type="submit" value="Enviar" style="width: 150px" />
-        </form>
+            <input id="submit" type="submit" value="Enviar" />
+          </form>
+        </div>
       </div>
     </div>
   </body>
