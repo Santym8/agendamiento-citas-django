@@ -22,7 +22,21 @@
   width: 30%;
 }
 
-img {
+#Imagen-medico
+{
+  border: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+.img-pie {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+}
+
+#Imagen-pie {
   border: 0;
   max-width: 100%;
   height: auto;
