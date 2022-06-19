@@ -1,4 +1,4 @@
-* {
+/* * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -22,7 +22,6 @@
 
 .content-registro {
   display: flex;
-  /* flex-wrap: wrap; */
 }
 
 input {
@@ -68,4 +67,4 @@ input {
   .content-registro {
     max-width: 540px;
   }
-}
+} */
