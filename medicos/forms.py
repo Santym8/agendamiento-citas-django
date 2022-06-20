@@ -13,14 +13,18 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-            'username',
             'first_name',
             'last_name',
+            'username',
             'email',
             'password']
         labels = {
             'username': 'Cédula',
         }
+    username = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Usuario"}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Flores"}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Leonardo"}))
+    email = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"leonardoflores@correo.com"}))
 
     verificar_contraseña = forms.CharField(required=True)
     #Verifica que la cedula(username) sea válida
@@ -93,7 +97,8 @@ class MedicoForm(forms.ModelForm):
     fecha_nacimiento = forms.DateField(
         widget=forms.DateInput, 
         required=True, 
-        label='Fecha Nacimeinto (yyyy-mm-dd)')
+        label='Fecha Nacimeinto')
+    fecha_nacimiento = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"(yyyy-mm-dd)"}))
     numero_celular = formfields.PhoneNumberField(
         required=True,  
         initial='+593', 

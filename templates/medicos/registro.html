@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agedamiento de Citas</title>
-    <link rel="stylesheet" href="{% static 'medicos\registro.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\registro2.css' %}" />
   </head>
 
   <body>
@@ -28,41 +28,42 @@
       </div>
       <div class="content">
         <div class="header-registro-medicos">
-          <h1>Registro Médicos</h1>
+          <div class="head-titulo">      
+            <h1>Registro Médicos</h1>
+            <div class="img-logo">
+              <img
+                id="logo"
+                src="{% static '\medicos\img\CitasMedicas.png' %}"
+                alt=""
+              />
+            </div>
+          </div>
           <div class="header__descripcion">
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio,
-              beatae, tempora explicabo dolorem laborum amet nam alias rerum
-              sapiente deserunt ullam, quas laudantium harum molestias facere
-              mollitia hic fugiat animi!
-            </p>
+            <p>Sistema de registro para trabajadores de la salud.</p>
           </div>
         </div>
         <div class="content-registro">
           <form action="" method="post" enctype="multipart/form-data">
             <div class="Todo">
-              <div class="User">
-                {% csrf_token %} {% for campo in form_usuario %}
-                <div>
-                  {{ campo.errors }}
-                  <br />
-                  {{ campo.label_tag }} <br />
-                  {{ campo }}
-                </div>
-                {% endfor %}
+              {% csrf_token %} {% for campo in form_usuario %}
+              <div>
+                {{ campo.errors }}
+                <br />
+                {{ campo.label_tag }} <br />
+                {{ campo }}
               </div>
-              <div class="Medico">
-                {% for campo in form_medico %}
-                <div>
-                  {{ campo.errors }}
-                  <br />
-                  {{ campo.label_tag }} <br />
-                  {{ campo }}
-                </div>
-                {% endfor %}
+              {% endfor %} {% for campo in form_medico %}
+              <div>
+                {{ campo.errors }}
+                <br />
+                {{ campo.label_tag }} <br />
+                {{ campo }}
               </div>
+              {% endfor %}
             </div>
-            <input id="submit" type="submit" value="Enviar" />
+            <div class="guardar">
+              <input id="submit" type="submit" value="Enviar" />
+            </div>
           </form>
         </div>
       </div>

@@ -6,9 +6,10 @@
 .content {
   font-family: "Montserrat", sans-serif;
   width: 75%;
-  padding-top: 140px;
+  padding-top: 80px;
   margin: auto;
   overflow: hidden;
+  padding-bottom: 80px;
 }
 
 .registro-total {
@@ -19,7 +20,7 @@
   position: absolute;
   right: 0;
   top: 0;
-  width: 30%;
+  width: 25%;
 }
 
 #Imagen-Medico {
@@ -32,7 +33,7 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 40%;
+  width: 30%;
 }
 
 #Imagen-pie {
@@ -41,38 +42,72 @@
   height: auto;
 }
 
+.img-logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5%;
+  margin-left: 20px;
+}
+
+#logo{
+  max-width: 100%;
+}
+
+.head-titulo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
 .header-registro-medicos h1 {
   text-align: center;
-  color: #851717;
+  font-size: 40px;
+  color: #be0f1b;
 }
 
 .header-registro-medicos p {
   text-align: center;
   padding-top: 20px;
+  color: rgb(61, 10, 10);
 }
 
 /* .content-registro {
-  display: flex;
-  flex-wrap: wrap;
-} */
+    display: flex;
+    flex-wrap: wrap;
+  } */
+
+input::placeholder {
+  color: #868686;
+}
 
 .Todo {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
 }
 
 .Todo div {
-  width: 40%;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
+
+#id_first_name {
+  grid-column: 1 / 2;
 }
 
 #submit {
   width: 30%;
   margin-top: 30px;
-  margin-left: auto;
-  margin-right: auto;
   background-color: #851717;
   color: white;
+}
+
+.guardar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Todo .User {
@@ -99,24 +134,31 @@ select {
 label {
   font-size: 15px;
   font-weight: 200;
-  color: rgb(130, 23, 23);
+  color: rgb(61, 10, 10);
 }
 
-@media screen and(min-width: 992px) {
+@media screen and (max-width: 900px) {
   .Todo {
     display: grid;
     grid-template-columns: auto;
   }
 }
-/* 
-@media (min-width: 768px) {
-  .content-registro {
-    max-width: 720px;
-  }
-} 
 
-@media (min-width: 576px) {
-  .content-registro {
-    max-width: 540px;
+/* @media screen and(min-width: 992px) {
+    .content-registro div {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
   }
-} */
+  
+  @media (min-width: 768px) {
+    .content-registro {
+      max-width: 720px;
+    }
+  } 
+  
+  @media (min-width: 576px) {
+    .content-registro {
+      max-width: 540px;
+    }
+  } */
