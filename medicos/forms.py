@@ -21,10 +21,12 @@ class UserForm(forms.ModelForm):
         labels = {
             'username': 'Cédula',
         }
-    username = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Usuario"}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Flores"}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Leonardo"}))
-    email = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"leonardoflores@correo.com"}))
+        widgets = {
+            'username':forms.TextInput(attrs={"placeholder":"1002003004"}),
+            'last_name': forms.TextInput(attrs={"placeholder":"Flores"}),
+            'first_name':forms.TextInput(attrs={"placeholder":"Leonardo"}),
+            'email':forms.TextInput(attrs={"placeholder":"leonardoflores@correo.com"})
+        }
 
     verificar_contraseña = forms.CharField(required=True)
     #Verifica que la cedula(username) sea válida
@@ -95,10 +97,9 @@ class MedicoForm(forms.ModelForm):
         fields = ['especialidad', 'titulo_acreditacion_medica']
 
     fecha_nacimiento = forms.DateField(
-        widget=forms.DateInput, 
+        widget=forms.DateInput(attrs={"placeholder":"(yyyy-mm-dd)"}), 
         required=True, 
         label='Fecha Nacimeinto')
-    fecha_nacimiento = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"(yyyy-mm-dd)"}))
     numero_celular = formfields.PhoneNumberField(
         required=True,  
         initial='+593', 
