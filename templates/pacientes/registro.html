@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %} {% for campo in user_form %}
+        <div>
+            {{ campo.errors }}
+            <br> {{ campo.label_tag }}
+            <br> {{ campo }}
+        </div>
+        {% endfor %} {% for campo in paciente_form %}
+        <div>
+            {{ campo.errors }}
+            <br> {{ campo.label_tag }}
+            <br> {{ campo }}
+        </div>
+        {% endfor %}
+        <input type="submit" value="Enviar" style=" width: 150px;">
+    </form>
+</body>
+
+</html>

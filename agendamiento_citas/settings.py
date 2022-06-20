@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "verify_email.apps.VerifyEmailConfig",
     'phonenumber_field',
     'medicos',
+    'pacientes',
 ]
 
 MIDDLEWARE = [
