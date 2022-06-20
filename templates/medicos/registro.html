@@ -1,32 +1,58 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agedamiento de Citas</title>
-    <link rel="stylesheet" href="{% static 'medicos/registro.css' %}">
+    <link rel="stylesheet" href="{% static 'css\registro2.css' %}" />
 </head>
 
 <body>
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %} {% for campo in form_usuario %}
-        <div>
-            {{ campo.errors }}
-            <br> {{ campo.label_tag }}
-            <br> {{ campo }}
+    <div class="registro-total">
+        <div class="img-encabezado">
+            <img id="Imagen-Medico" src="{% static '\medicos\img\contact-shape3.png' %}" alt="" />
         </div>
-        {% endfor %} {% for campo in form_medico %}
-        <div>
-            {{ campo.errors }}
-            <br> {{ campo.label_tag }}
-            <br> {{ campo }}
+        <div class="img-pie">
+            <img id="Imagen-pie" src="{% static '\medicos\img\contact-shape2.png' %}" alt="" />
         </div>
-        {% endfor %}
-        <input type="submit" value="Enviar" style=" width: 150px;">
-    </form>
+        <div class="content">
+            <div class="header-registro-medicos">
+                <div class="head-titulo">
+                    <h1>Registro Médicos</h1>
+                    <div class="img-logo">
+                        <img id="logo" src="{% static '\medicos\img\CitasMedicas.png' %}" alt="" />
+                    </div>
+                </div>
+                <div class="header__descripcion">
+                    <p>Sistema de registro para trabajadores de la salud.</p>
+                </div>
+            </div>
+            <div class="content-registro">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div class="Todo">
+                        {% csrf_token %} {% for campo in form_usuario %}
+                        <div>
+                            {{ campo.errors }}
+                            <br /> {{ campo.label_tag }} <br /> {{ campo }}
+                        </div>
+                        {% endfor %} {% for campo in form_medico %}
+                        <div>
+                            {{ campo.errors }}
+                            <br /> {{ campo.label_tag }} <br /> {{ campo }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="guardar">
+                        <input id="submit" type="submit" value="Enviar" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

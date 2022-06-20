@@ -13,15 +13,22 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-            'username',
             'first_name',
             'last_name',
+            'username',
             'email',
             'password']
         labels = {
             'username': 'Cédula',
         }
+        widgets = {
+            'username':forms.TextInput(attrs={"placeholder":"1002003004"}),
+            'last_name': forms.TextInput(attrs={"placeholder":"Flores"}),
+            'first_name':forms.TextInput(attrs={"placeholder":"Leonardo"}),
+            'email':forms.TextInput(attrs={"placeholder":"leonardoflores@correo.com"})
+        }
 
+    verificar_contraseña = forms.CharField(required=True)
     #Verifica que la cedula(username) sea válida
     def clean_username(self):
         data = self.cleaned_data['username']
@@ -75,7 +82,14 @@ class UserForm(forms.ModelForm):
             raise ValidationError('Correo electrónico en uso')
         return data
 
-
+    #Verifica confirmacion contraseña
+    def clean_verificar_contraseña(self):
+        contraseña = self.cleaned_data['password']
+        confirmar_contraseña = self.cleaned_data['verificar_contraseña']
+        if contraseña != confirmar_contraseña:
+            raise ValidationError('No coinciden contraseñas')
+        return confirmar_contraseña
+        
 #-------------------------------Fomrulario Medicos---------------------------
 class MedicoForm(forms.ModelForm):
     class Meta:
@@ -83,9 +97,9 @@ class MedicoForm(forms.ModelForm):
         fields = ['especialidad', 'titulo_acreditacion_medica']
 
     fecha_nacimiento = forms.DateField(
-        widget=forms.DateInput, 
+        widget=forms.DateInput(attrs={"placeholder":"(yyyy-mm-dd)"}), 
         required=True, 
-        label='Fecha Nacimeinto (yyyy-mm-dd)')
+        label='Fecha Nacimeinto')
     numero_celular = formfields.PhoneNumberField(
         required=True,  
         initial='+593', 
