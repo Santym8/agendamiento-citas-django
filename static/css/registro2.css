@@ -12,6 +12,9 @@
     overflow: hidden;
     padding-bottom: 80px;
 }
+.content-registro{
+    margin-top: 40px;
+}
 
 .registro-total {
     position: relative;
@@ -105,15 +108,6 @@ input::placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.Todo .User {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    width: 100%;
-    margin-right: 5px;
-    /* margin-right: 50px;     */
 }
 
 input,
