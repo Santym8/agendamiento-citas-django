@@ -4,17 +4,17 @@
     margin: 0;
 }
 
-.content {
+.registro-total {
+    position: relative;
+}
+
+.contenedor {
     font-family: "Montserrat", sans-serif;
     width: 75%;
     padding-top: 80px;
     margin: auto;
     overflow: hidden;
     padding-bottom: 80px;
-}
-
-.registro-total {
-    position: relative;
 }
 
 .img-encabezado {
@@ -24,10 +24,11 @@
     width: 25%;
 }
 
-#Imagen-Medico {
+#Imagen-Encabezado {
     border: 0;
     max-width: 100%;
     height: auto;
+    filter: invert(11%) sepia(19%) saturate(6526%) hue-rotate(206deg) brightness(94%) contrast(97%);
 }
 
 .img-pie {
@@ -41,6 +42,7 @@
     border: 0;
     max-width: 100%;
     height: auto;
+    filter: invert(11%) sepia(19%) saturate(6526%) hue-rotate(206deg) brightness(94%) contrast(97%);
 }
 
 .img-logo {
@@ -51,54 +53,42 @@
     margin-left: 20px;
 }
 
-#logo {
+#Logo {
     max-width: 100%;
+    filter: invert(11%) sepia(19%) saturate(6526%) hue-rotate(206deg) brightness(94%) contrast(97%);
 }
 
-.head-titulo {
+.titulo {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.header-registro-medicos h1 {
+.encabezado h1 {
     text-align: center;
     font-size: 40px;
-    color: #be0f1b;
+    color: #0f244f;
 }
 
-.header-registro-medicos p {
+.encabezado p {
     text-align: center;
     padding-top: 20px;
-    color: rgb(61, 10, 10);
+    color: #0f244f;
 }
-
-input::placeholder {
-    color: #868686;
+form{
+    margin-top: 20px;
 }
-
-.Todo {
+.contenido-formulario {
     display: grid;
     grid-template-columns: auto auto;
-    grid-template-rows: 110px 110px 110px 110px 110px;
+    grid-template-rows: 116px 116px 116px 116px
 }
 
-.Todo div {
+.contenido-formulario div {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
     align-items: center;
-}
-
-#id_first_name {
-    grid-column: 1 / 2;
-}
-
-#submit {
-    width: 30%;
-    margin-top: 30px;
-    background-color: #851717;
-    color: white;
 }
 
 .guardar {
@@ -107,40 +97,39 @@ input::placeholder {
     align-items: center;
 }
 
-.Todo .User {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    width: 100%;
-    margin-right: 5px;
-    /* margin-right: 50px;     */
+#Boton-submit {
+    width: 30%;
+    margin-top: 30px;
+    background-color: #0f244f;
+    color: white;
 }
-
-input,
-select {
+#Boton-submit:hover {
+    background-color: white;
+    color: #0f244f;
+}
+label {
+    font-size: 15px;
+    font-weight: 200px;
+    color: #0f244f;
+}
+input{
     height: 42px;
-    border: 1px solid #851717;
+    border: 1px solid  #0f244f;
     border-radius: 7px;
     width: 100%;
     padding: 10px 15px;
-    color: rgb(133, 41, 41);
+    color:  #0f244f;
     transition: all 0.3s ease;
     margin-top: 5px;
-}
-
-label {
-    font-size: 15px;
-    font-weight: 200;
-    color: rgb(61, 10, 10);
 }
 .errorlist {
     color: red;
     list-style: none;
 }
 @media screen and (max-width: 900px) {
-    .Todo {
+    .contenido-formulario{
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 120px 120px 120px 120px 120px 120px 120px 120px 120px 120px;
+        grid-template-rows: 120px 120px 120px 120px 120px 120px 120px 120px;
     }
 }

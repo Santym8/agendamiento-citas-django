@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,26 +6,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Agendamiento de Citas</title>
+    <link rel="stylesheet" href="{% static 'css\registroPaciente.css' %}"/>
 </head>
 
 <body>
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %} {% for campo in user_form %}
-        <div>
-            {{ campo.errors }}
-            <br> {{ campo.label_tag }}
-            <br> {{ campo }}
+    <div class="registro-total">
+        <div class="img-encabezado">
+            <img id="Imagen-Encabezado" src="{% static '\medicos\img\contact-shape3.png' %}" alt="" />
         </div>
-        {% endfor %} {% for campo in paciente_form %}
-        <div>
-            {{ campo.errors }}
-            <br> {{ campo.label_tag }}
-            <br> {{ campo }}
+        <div class="img-pie">
+            <img id="Imagen-pie" src="{% static '\medicos\img\contact-shape2.png' %}" alt="" />
         </div>
-        {% endfor %}
-        <input type="submit" value="Enviar" style=" width: 150px;">
-    </form>
+        <div class="contenedor">
+            <div class="encabezado">
+                <div class="titulo">
+                    <h1>Registro Pacientes</h1>
+                    <div class="img-logo">
+                        <img id="Logo" src="{% static '\medicos\img\CitasMedicas.png' %}" alt="" />
+                    </div>
+                </div>
+                <div class="encabezado-descripcion">
+                    <p>Sistema de registro para pacientes.</p>
+                </div>
+            </div>
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="contenido-formulario">
+                    {% csrf_token %} {% for campo in user_form %}
+                    <div>
+                        {{ campo.errors }}
+                        <br> {{ campo.label_tag }}
+                        <br> {{ campo }}
+                    </div>
+                    {% endfor %} {% for campo in paciente_form %}
+                    <div>
+                        {{ campo.errors }}
+                        <br> {{ campo.label_tag }}
+                        <br> {{ campo }}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="guardar">
+                    <input id="Boton-submit" type="submit" value="Enviar" style=" width: 150px;">
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
