@@ -27,7 +27,7 @@ class UserForm(forms.ModelForm):
             'first_name':forms.TextInput(attrs={"placeholder":"Leonardo"}),
             'email':forms.TextInput(attrs={"placeholder":"leonardoflores@correo.com"})
         }
-
+        
     verificar_contraseña = forms.CharField(required=True)
     #Verifica que la cedula(username) sea válida
     def clean_username(self):
@@ -84,11 +84,13 @@ class UserForm(forms.ModelForm):
 
     #Verifica confirmacion contraseña
     def clean_verificar_contraseña(self):
-        contraseña = self.cleaned_data['password']
-        confirmar_contraseña = self.cleaned_data['verificar_contraseña']
-        if contraseña != confirmar_contraseña:
+        contraseña = self.cleaned_data.get('password')
+        verificar_contraseña = self.cleaned_data['verificar_contraseña']
+        if len(contraseña) < 8:
+            raise ValidationError('La contraseña debe tener mas de 8 caracteres') 
+        if contraseña != verificar_contraseña:
             raise ValidationError('No coinciden contraseñas')
-        return confirmar_contraseña
+        return verificar_contraseña
         
 #-------------------------------Fomrulario Medicos---------------------------
 class MedicoForm(forms.ModelForm):

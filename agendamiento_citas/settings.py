@@ -135,14 +135,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #Configuracion envio de correos electrónicos
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp-mail.outlook.com"
-EMAIL_USE_TLS = True
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp-mail.outlook.com"
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = "santympruebas@outlook.com"
+# EMAIL_HOST_PASSWORD = "Santtympruebas"
+# DEFAULT_FROM_EMAIL = 'santympruebas@outlook.com'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'santympruebas@gmail.com'
+EMAIL_HOST_PASSWORD = 'dnrizucklhfjdhrw' #past the key or password app here
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "santympruebas@outlook.com"
-EMAIL_HOST_PASSWORD = "Santtympruebas"
-DEFAULT_FROM_EMAIL = 'santympruebas@outlook.com'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'SantymPruebas'
 
 #Configuraion de Email verificacion
-LOGIN_URL = 'inicio_medicos'
+LOGIN_URL = 'login'
 VERIFICATION_SUCCESS_TEMPLATE = None
