@@ -10,7 +10,6 @@ def inicio_sesion(request):
         if(login_form.is_valid()):
             try:
                 user = User.objects.get(email=login_form.cleaned_data['correo'])
-                print(user.password)
             except User.DoesNotExist:
                 user = None
             if(user is not None and user.password == login_form.cleaned_data['contraseña']):
