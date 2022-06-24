@@ -20,9 +20,10 @@ def registro(request):
         medico_form = MedicoForm(request.POST, request.FILES)
         if user_form.is_valid() and medico_form.is_valid():
             #Guarda usuario
+            #user_form.save()
             send_verification_email(request, user_form)
             #Añade usuairo al grupo Medicos
-            user = User.objects.get(username=user_form.cleaned_data['username'])
+            user = User.objects.get(username=user_form.cleaned_data['username']) 
             user.groups.add(Group.objects.get(name='Medicos'))
             #Crea medico con el usuairo creado
             nuevo_medico = Medico(

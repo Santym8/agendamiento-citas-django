@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="" method="post">
+        {% csrf_token %} {% for campo in login_form %} {{ campo.errors }} {{ campo.label_tag }} {{ campo }} {% endfor %}
+        <input id="submit" type="submit" value="Enviar" />
+    </form>
+    {% if error %}
+    <div>{{error}}</div>
+    {% endif %}
+
+</body>
+
+</html>
