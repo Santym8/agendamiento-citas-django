@@ -5,10 +5,11 @@
 }
 
 .content {
-    font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif;
   width: 100%;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -17,30 +18,39 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 50%;
+  width: 30%;
+  border: solid 1px #1919396d;
+  border-radius: 7px;
+  margin-top: 20px;
 }
 
 .header__content {
   width: 10%;
+  margin: 15px 0px;
+  display: flex;
+  justify-content: center;
 }
 
 #Imagen-Medico {
   width: 100%;
   min-width: 55px;
+  filter: invert(12%) sepia(48%) saturate(2572%) hue-rotate(236deg) brightness(50%) contrast(101%)
 }
-
 .login__inicio {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  border-top: 1px solid #19193976;
+  width: 100%;
 }
 
-.login__inicio input {
+.login__inicio input,#submit {
   height: 42px;
-  border: 1px solid #851717;
+  border: 1px solid #191939;
   border-radius: 7px;
   width: 100%;
   padding: 20px 25px;
-  color: rgb(133, 41, 41);
+  color: #191939;
   transition: all 0.3s ease;
   margin-top: 5px;
 }
@@ -54,5 +64,75 @@
 }
 
 .login__inicio h1{
-    
+  color: #191939;
+  text-align: center;
+}
+.form__header{
+  margin: 20px 0px;
+}
+#submit{
+  padding: 0%;
+  background-color:#191939;
+  color: white;
+}
+#submit:hover{
+  background-color:white;
+  color: #191939;
+}
+a{
+  text-decoration: none;
+}
+.Vinculos{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.Vinculos__registro{
+  margin: 10px 0px;
+}
+.link{
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #191939;
+  border-radius: 7px;
+  width: 50%;
+  color: #191939;
+  transition: all 0.3s ease;
+  margin: 5px 15px;
+}
+.link:hover{
+  color: white;
+  background-color: #191939;
+}
+.errores{
+  margin: 20px 0px;
+  color: red;
+}
+
+@media screen and (max-width: 900px) {
+  .centro{
+    width: 50%;
+  }
+  .Vinculos {
+    flex-direction: column;
+  }
+  .Vinculos__registro{
+    margin: 20px 0px;
+  }
+}
+@media screen and (max-width: 377px) {
+  .centro{
+    width: 50%;
+  }
+  .Vinculos {
+    flex-direction: column;
+  }
+  .Vinculos__registro{
+    margin: 20px 0px;
+  }
+  .link{
+    font-size: 10px;
+  }
 }

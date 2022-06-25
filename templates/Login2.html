@@ -2,44 +2,49 @@
 
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Agedamiento de Citas</title>
-    <link rel="stylesheet" href="{% static 'css\Login.css' %}" />
-  </head>
 
-  <body>
-    <div class="content">
-      <div class="centro">
-        <div class="header__content">
-          <img
-            id="Imagen-Medico"
-            src="{% static '\medicos\img\CitasMedicas.png' %}"
-            alt=""
-          />
-        </div>
-        <form class="login__inicio" action="" method="post">
-          <div class="form__header">
-            <h1>Inicio de Sesión</h1>
-          </div>
-          <div class="Campos">
-            {% csrf_token %} {% for campo in login_form %}
-            <div class="Campos">
-              {{ campo.errors }} {{campo.label_tag }} {{ campo }}
-            </div>
-            {% endfor %}
-            <input id="submit" type="submit" value="Enviar" />
-          </div>
-        </form>
-        {% if error %}
-        <div>{{error}}</div>
-        {% endif %}
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agedamiento de Citas</title>
+  <link rel="stylesheet" href="{% static 'css\Login.css' %}" />
+</head>
 
-        <a href="{% url  'registro_medicos' %}">Registro Medicos</a>
-        <a href="{% url  'registro_pacientes' %}">Registro Pacientes</a>
+<body>
+  <div class="content">
+    <div class="centro">
+      <div class="header__content">
+        <img id="Imagen-Medico" src="{% static '\medicos\img\CitasMedicas.png' %}" alt="" />
       </div>
+      <form class="login__inicio" action="" method="post">
+        <div class="form__header">
+          <h1>Inicio de Sesión</h1>
+        </div>
+        <!-- <div class="Campos"> -->
+        {% csrf_token %} {% for campo in login_form %}
+        <div class="Campos">
+          {{ campo.errors }} {{campo.label_tag }} {{ campo }}
+        </div>
+        {% endfor %}
+        <div class="Campos">
+          <input id="submit" type="submit" value="Enviar" />
+        </div>
+        <!-- </div> -->
+        <div class="Vinculos">
+          <div class="Vinculos__registro">
+            <a class="link" href="{% url  'registro_medicos' %}">Registro Médicos</a>
+          </div>
+          <div class="Vinculos__registro">
+            <a class="link" href="{% url  'registro_pacientes' %}">Registro Pacientes</a>
+          </div> 
+        </div>
+      </form>
     </div>
-  </body>
+    {% if error %}
+      <div class="errores">{{error}}</div>
+      {% endif %}
+  </div>
+</body>
+
 </html>
