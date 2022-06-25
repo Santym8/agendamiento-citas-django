@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Agedamiento de Citas</title>
     <link rel="stylesheet" href="{% static 'css\Login.css' %}" />
   </head>
 
@@ -21,9 +21,14 @@
           />
         </div>
         <form class="login__inicio" action="" method="post">
+          <div class="form__header">
+            <h1>Inicio de Sesión</h1>
+          </div>
           <div class="Campos">
             {% csrf_token %} {% for campo in login_form %}
-            <div>{{ campo.errors }} {{campo.label_tag }} {{ campo }}</div>
+            <div class="Campos">
+              {{ campo.errors }} {{campo.label_tag }} {{ campo }}
+            </div>
             {% endfor %}
             <input id="submit" type="submit" value="Enviar" />
           </div>

@@ -1,0 +1,58 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.content {
+    font-family: "Montserrat", sans-serif;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centro {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+}
+
+.header__content {
+  width: 10%;
+}
+
+#Imagen-Medico {
+  width: 100%;
+  min-width: 55px;
+}
+
+.login__inicio {
+  display: flex;
+  flex-direction: column;
+}
+
+.login__inicio input {
+  height: 42px;
+  border: 1px solid #851717;
+  border-radius: 7px;
+  width: 100%;
+  padding: 20px 25px;
+  color: rgb(133, 41, 41);
+  transition: all 0.3s ease;
+  margin-top: 5px;
+}
+
+.Campos {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.login__inicio h1{
+    
+}

@@ -19,8 +19,8 @@ def inicio_sesion(request):
                         return render(request, 'medicos/panel_principal.html')
                     elif user.groups.filter(name='Pacientes').exists():
                         return render(request, 'pacientes/panel_principal.html')
-                return render(request, 'login.html', {'login_form':login_form, 'error':'Usuario Desactivado'})
-        return render(request, 'login.html', {'login_form':login_form, 'error':'Correo o Contraseña Incorrecta'})
+                return render(request, 'Login2.html', {'login_form':login_form, 'error':'Usuario Desactivado'})
+        return render(request, 'Login2.html', {'login_form':login_form, 'error':'Correo o Contraseña Incorrecta'})
     else:
         login_form = LoginForm()
-        return render(request, 'login.html', {'login_form':login_form})
+        return render(request, 'Login2.html', {'login_form':login_form})
