@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from verify_email.email_handler import send_verification_email
 from django.core.files.base import ContentFile
+from django.contrib.auth.decorators import user_passes_test
 #Modelos
 from .models import Medico, Especialidad
 from django.contrib.auth.models import User, Group
@@ -11,9 +12,6 @@ from .forms import UserForm, MedicoForm
 
 
 
-def inicio_sesion(request):
-    return HttpResponse("Inicio de sesion")
-    
 def registro(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
@@ -42,6 +40,13 @@ def registro(request):
         return render(request, 'medicos/registro.html', {'form_usuario': user_form, 'form_medico':medico_form})
 
   
+
+def verifica_medico(user):
+    return user.groups.filter(name='Medicos').exists()
+
+@user_passes_test(verifica_medico)
+def panel_principal(request):
+    return render(request, 'medicos/panel_principal.html')
     
 
     

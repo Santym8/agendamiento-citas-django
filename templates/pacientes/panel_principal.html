@@ -5,11 +5,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paciente</title>
+    <title>Pacientes</title>
 </head>
 
 <body>
-    <h1>Panel Paciente</h1>
+
+    <header>
+        <h1>Panel Paciente</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>Inicio</li>
+            <li>Cuenta</li>
+            <li>Cerrar Sesión</li>
+        </ul>
+    </nav>
+    <main>
+        {% block contenido %} {% endblock %}
+    </main>
+
+    <footer>
+        Pie de Pagina
+    </footer>
+
+
 </body>
 
 </html>

@@ -3,6 +3,7 @@ from .forms import LoginForm
 
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
+from django.http import HttpResponseRedirect
 
 def inicio_sesion(request):
     if request.method == 'POST':
@@ -16,9 +17,9 @@ def inicio_sesion(request):
                 if(user.is_active):
                     login(request, user)
                     if user.groups.filter(name='Medicos').exists():
-                        return render(request, 'medicos/panel_principal.html')
+                        return HttpResponseRedirect('medicos/')
                     elif user.groups.filter(name='Pacientes').exists():
-                        return render(request, 'pacientes/panel_principal.html')
+                        return HttpResponseRedirect('pacientes/')
                 return render(request, 'Login2.html', {'login_form':login_form, 'error':'Usuario Desactivado'})
         return render(request, 'Login2.html', {'login_form':login_form, 'error':'Correo o Contraseña Incorrecta'})
     else:

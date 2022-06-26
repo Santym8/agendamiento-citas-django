@@ -9,7 +9,26 @@
 </head>
 
 <body>
-    <h1>Panel Medico</h1>
+
+    <header>
+        <h1>Panel Medico</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>Inicio</li>
+            <li>Cuenta</li>
+            <li>Cerrar Sesión</li>
+        </ul>
+    </nav>
+    <main>
+        {% block contenido %} {% endblock %}
+    </main>
+
+    <footer>
+        Pie de Pagina
+    </footer>
+
+
 </body>
 
 </html>
