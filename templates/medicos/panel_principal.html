@@ -1,34 +1,45 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends "medicos/base.html" %} {% block links %} {% endblock %} {% block contenido %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medico</title>
-</head>
-
-<body>
-
-    <header>
-        <h1>Panel Medico</h1>
-    </header>
-    <nav>
-        <ul>
-            <li>Inicio</li>
-            <li>Cuenta</li>
-            <li>Cerrar Sesión</li>
-        </ul>
-    </nav>
-    <main>
-        {% block contenido %} {% endblock %}
-    </main>
-
-    <footer>
-        Pie de Pagina
-    </footer>
+<div id="contenedor_tabla_turno">
+    <table>
+        <tr>
+            <td>Completado</td>
+            <td>Fecha</td>
+            <td>Paciente</td>
+            <td>Nombre</td>
+        </tr>
+        {% for turno in turnos %}
+        <tr>
+            <td>{{turno.completado}}</td>
+            <td>{{turno.fecha}}</td>
+            <td>{{turno.paciente}}</td>
+            <td>{{pacientes|get_value:turno.id}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 
 
-</body>
+<div id="contenedor_formulario_crear_turno" style="width: 50%;">
+    <form action="" method="post">
+        {% csrf_token %} {{ form_crear_turno.fecha.errors }}
+        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+            {{ form_crear_turno.fecha }}
+            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
+        </div>
+        <input type="submit" value="Crear">
+    </form>
+</div>
 
-</html>
+
+{% endblock %} {% block scripts %}
+
+<script>
+    $(function() {
+        $("#datetimepicker1").datetimepicker({
+            format: 'DD/MM/YYYY HH:mm',
+        });
+    });
+</script>{% endblock %}

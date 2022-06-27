@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "verify_email.apps.VerifyEmailConfig",
     'phonenumber_field',
-    'medicos',
     'pacientes',
+    'medicos',
+
 ]
 
 MIDDLEWARE = [

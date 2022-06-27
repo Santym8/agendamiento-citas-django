@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Especialidad, Medico
+from .models import Especialidad, Medico, Turno
 # Register your models here.
 
 class EspecialidadAdmin(admin.ModelAdmin):
@@ -13,5 +13,10 @@ class MedicoAdmin(admin.ModelAdmin):
     def pdf(self, obj):
         return format_html('<a href="{}"> Ver </a>', obj.titulo_acreditacion_medica.url)
 
+class TurnoAdmin(admin.ModelAdmin):
+    list_display = ['id', 'medico', 'paciente', 'fecha', 'completado']
+
+
 admin.site.register(Especialidad, EspecialidadAdmin)
 admin.site.register(Medico, MedicoAdmin)
+admin.site.register(Turno, TurnoAdmin)

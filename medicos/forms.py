@@ -6,7 +6,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 from django.contrib.auth.models import User
-from .models import Medico
+from .models import Medico, Turno
 
 
 class UserForm(forms.ModelForm):
@@ -115,3 +115,32 @@ class MedicoForm(forms.ModelForm):
         if edad.years < 18:
             raise ValidationError('NO puedes crear una cuenta si eres Menor de Edad')
         return data
+
+class CrearTurno(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        self.medico = kwargs.pop('medico',None)
+        super(CrearTurno, self).__init__(*args, **kwargs)
+    
+    fecha = forms.DateTimeField(
+        input_formats=['%d/%m/%Y %H:%M'],
+        widget=forms.DateTimeInput(attrs={
+            'class': 'form-control datetimepicker-input',
+            'data-target': '#datetimepicker1'
+        })
+    )
+
+    def clean_fecha(self):
+        print(self.cleaned_data['fecha'])
+        data = self.cleaned_data['fecha']
+        turnos = Turno.objects.filter(medico=self.medico.id, fecha=data)
+        if turnos:
+            raise ValidationError('Conflicto de Horarios')
+        return data
+    def save(self):
+        turno = Turno(
+                medico=self.medico, 
+                completado=False, 
+                fecha=self.cleaned_data['fecha'], 
+                paciente=None)
+        turno.save()
