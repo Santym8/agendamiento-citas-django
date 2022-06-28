@@ -11,6 +11,8 @@ from django.contrib.auth.models import User, Group
 from pacientes.models import Paciente
 #Formularios
 from .forms import UserForm, MedicoForm, CrearTurno
+#Python
+from datetime import datetime, timedelta, date
 
 
 
@@ -50,26 +52,90 @@ def verifica_medico(user):
 def get_value(dictionary, key):
     return dictionary.get(key)
 
+
+
+def get_turnos_semana(fecha, id):
+    inicio_semana = fecha - timedelta(days=fecha.weekday())
+    fin_semana = inicio_semana + timedelta(days=7)
+    turnos = Turno.objects.filter(fecha__gte=inicio_semana, fecha__lt=fin_semana, medico=id).order_by('fecha')
+
+    fechas_agrupadas = {}
+
+    for i in range(7):
+        fecha_grupo = inicio_semana+timedelta(days=i)
+        fechas_agrupadas[fecha_grupo] = turnos.filter(fecha__gte=fecha_grupo, fecha__lt=fecha_grupo+timedelta(days=1))
+
+    return fechas_agrupadas
+
 @user_passes_test(verifica_medico)
 def panel_principal(request):
+    #Obiene la fecha de la semana que debe mostrar
+    fecha = request.GET.get('fecha')
+    if(fecha is None):
+        fecha = date.today()
+    else:
+        fecha = datetime.strptime(fecha, '%d-%m-%Y')
+    #Obtiene datos del medico
     medico = Medico.objects.get(user=request.user.id)
-    turnos = Turno.objects.filter(medico=medico.id)
+    #Obtiene los turno
+    turnos = get_turnos_semana(fecha, medico.id)
+
+    #Guarda el nombre completo de cada paciente que a agendado una cita
     pacientes = {}
-    for turno in turnos:
-        if turno.paciente is not None:
-            paciente = Paciente.objects.get(id=turno.paciente.id)
-            user = User.objects.get(id=paciente.user.id)
-            pacientes[turno.id] = user.first_name +" "+ user.last_name 
-        
+    for turnos_dia in turnos:
+        turnos_dia = turnos[turnos_dia]
+        for turno in turnos_dia:
+            if turno.paciente is not None:
+                paciente = Paciente.objects.get(id=turno.paciente.id)
+                user = User.objects.get(id=paciente.user.id)
+                pacientes[turno.id] = user.first_name +" "+ user.last_name 
+    
     if request.method == 'GET':
         form_crear_turno = CrearTurno(medico=medico)
-        return render(request, 'medicos/panel_principal.html', {'turnos':turnos, 'pacientes':pacientes, 'form_crear_turno':form_crear_turno})
+        return render(request, 'medicos/panel_principal.html', 
+            {'turnos':turnos, 
+            'pacientes':pacientes, 
+            'form_crear_turno':form_crear_turno, 
+            'siguiente_semana':fecha + timedelta(days=7),
+            'anterior_semana':fecha - timedelta(days=7)
+            })
     else:
         form_crear_turno = CrearTurno(request.POST,medico=medico)
         if form_crear_turno.is_valid():
             form_crear_turno.save()
             return HttpResponseRedirect('/medicos')
         else:
-            return render(request, 'medicos/panel_principal.html', {'turnos':turnos, 'pacientes':pacientes, 'form_crear_turno':form_crear_turno})
+            return render(request, 'medicos/panel_principal.html', 
+                {'turnos':turnos, 
+                'pacientes':pacientes, 
+                'form_crear_turno':form_crear_turno, 
+                'siguiente_semana':fecha + timedelta(days=7),
+                'anterior_semana':fecha - timedelta(days=7)
+                })
 
-    
+@user_passes_test(verifica_medico)
+def cambiar_estado_turno(request, id):
+    medico = Medico.objects.get(user=request.user.id)
+    try:
+        turno = Turno.objects.get(medico=medico.id, id=id)
+    except turno.DoesNotExist:
+        turno = None
+    if(turno):
+        turno.completado = not turno.completado 
+        turno.save()    
+    return HttpResponseRedirect('/medicos')
+
+
+@user_passes_test(verifica_medico)
+def eliminar_turno(request, id):
+    medico = Medico.objects.get(user=request.user.id)
+    try:
+        turno = Turno.objects.get(medico=medico.id, id=id)
+    except turno.DoesNotExist:
+        turno = None
+    if(turno):
+        if(turno.paciente):
+            #To-do enviar correo al paciente
+            pass
+        turno.delete()  
+    return HttpResponseRedirect('/medicos')

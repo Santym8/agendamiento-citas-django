@@ -3,42 +3,58 @@
 <div id="contenedor_tabla_turno">
     <table>
         <tr>
-            <td>Completado</td>
+            <td>Estado</td>
             <td>Fecha</td>
             <td>Paciente</td>
             <td>Nombre</td>
+            <td>Eliminar</td>
         </tr>
-        {% for turno in turnos %}
+        {% for dia, turnos_dia in turnos.items %}
         <tr>
-            <td>{{turno.completado}}</td>
-            <td>{{turno.fecha}}</td>
+            <td colspan="5" style="background-color: rgb(107, 105, 105); text-align: center;">{{dia.day}}/{{dia.month}}/{{dia.year}}</td>
+        </tr>
+        {% for turno in turnos_dia %}
+        <tr>
+            <td>
+                {% if turno.completado %}
+                <a href="cambiar-estado-turno/{{turno.id}}">Completado</a> {% else %}
+                <a href="cambiar-estado-turno/{{turno.id}}">No Completado</a> {% endif %}
+            </td>
+            <td>{{turno.fecha|date:' H:i'}}</td>
             <td>{{turno.paciente}}</td>
             <td>{{pacientes|get_value:turno.id}}</td>
+            <td><a href="eliminar-turno/{{turno.id}}">X</a></td>
         </tr>
-        {% endfor %}
+        {% endfor %} {% endfor %}
     </table>
 </div>
 
-
-<div id="contenedor_formulario_crear_turno" style="width: 50%;">
-    <form action="" method="post">
-        {% csrf_token %} {{ form_crear_turno.fecha.errors }}
-        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-            {{ form_crear_turno.fecha }}
-            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+<div id="panle_derecha">
+    <div id="contenedor_formulario_crear_turno" style="width: 50%;">
+        <form action="" method="post">
+            {% csrf_token %} {{ form_crear_turno.fecha.errors }}
+            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                {{ form_crear_turno.fecha }}
+                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
             </div>
-        </div>
-        <input type="submit" value="Crear">
-    </form>
+            <input type="submit" value="Crear">
+        </form>
+    </div>
+    <div id="controles_fecha">
+        <a href="/medicos?fecha={{anterior_semana.day}}-{{anterior_semana.month}}-{{anterior_semana.year}}">Anterior {{anterior_semana}}</a>
+        <a href="/medicos?fecha={{siguiente_semana.day}}-{{siguiente_semana.month}}-{{siguiente_semana.year}}">Siguiente {{siguiente_semana}}</a>
+    </div>
 </div>
+
 
 
 {% endblock %} {% block scripts %}
 
 <script>
     $(function() {
-        $("#datetimepicker1").datetimepicker({
+        $("#datetimepicker1 ").datetimepicker({
             format: 'DD/MM/YYYY HH:mm',
         });
     });
