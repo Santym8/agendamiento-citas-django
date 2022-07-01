@@ -27,7 +27,8 @@ def registro(request):
                 fecha_nacimiento=paciente_form.cleaned_data['fecha_nacimiento'],
                 numero_celular=paciente_form.cleaned_data['numero_celular'])
             nuevo_paciente.save()
-            return HttpResponse("Pacientes funciona")
+            return render(request,'validacion_email/email.html',{'email':user_form['email']})
+            # return HttpResponse("Pacientes funciona")
         else:
             return render(request, 'pacientes/registro.html', {'user_form': user_form, 'paciente_form':paciente_form})
     else:
