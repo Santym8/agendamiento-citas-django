@@ -3,6 +3,7 @@
     <div class="create-date" id="panle_derecha">
         <div id="contenedor_formulario_crear_turno">
             <form class="date-form" action="" method="post">
+                {% csrf_token %}
                 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                     {{ form_crear_turno.fecha }}
                     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
@@ -12,7 +13,7 @@
                 <input class="date-submit" type="submit" value="Crear">
             </form>
             <div class="errors">
-                {% csrf_token %} {{ form_crear_turno.fecha.errors }}
+                {{ form_crear_turno.fecha.errors }}
             </div>
         </div>
         <div id="controles_fecha">
@@ -27,7 +28,7 @@
             <thead>
                 <tr>
                     <th>Estado</th>
-                    <th>Fecha</th>
+                    <th>Hora</th>
                     <th>Paciente</th>
                     <th>Nombre</th>
                     <th>Eliminar</th>
@@ -43,13 +44,21 @@
             <tr>
                 <td>
                     {% if turno.completado %}
-                    <a class="state-link" href="cambiar-estado-turno/{{turno.id}}"><div class="complete state-div">Completado</div></a> {% else %}
-                    <a class="state-link" href="cambiar-estado-turno/{{turno.id}}"><div class="incomplete state-div">No Completado</div></a> {% endif %}
+                    <a class="state-link" href="cambiar-estado-turno/{{turno.id}}/{{fecha_mostrada.day}}-{{fecha_mostrada.month}}-{{fecha_mostrada.year}}">
+                        <div class="complete state-div">Completado</div>
+                    </a> {% else %}
+                    <a class="state-link" href="cambiar-estado-turno/{{turno.id}}/{{fecha_mostrada.day}}-{{fecha_mostrada.month}}-{{fecha_mostrada.year}}">
+                        <div class="incomplete state-div">No Completado</div>
+                    </a> {% endif %}
                 </td>
                 <td>{{turno.fecha|date:' H:i'}}</td>
                 <td>{{turno.paciente}}</td>
                 <td>{{pacientes|get_value:turno.id}}</td>
-                <td class="delete-td"><a class="delete-link" href="eliminar-turno/{{turno.id}}"><div class="delete"><img class="img-delete" src="../../static/medicos/img/delete-icon-png-19.jpg"></div></a></td>
+                <td class="delete-td">
+                    <a class="delete-link" href="eliminar-turno/{{turno.id}}/{{fecha_mostrada.day}}-{{fecha_mostrada.month}}-{{fecha_mostrada.year}}">
+                        <div class="delete"><img class="img-delete" src="../../static/medicos/img/delete-icon-png-19.jpg"></div>
+                    </a>
+                </td>
             </tr>
             {% endfor %} {% endfor %}
         </table>
@@ -59,7 +68,7 @@
 {% endblock %} {% block scripts %}
 
 <script>
-    $(function () {
+    $(function() {
         $("#datetimepicker1 ").datetimepicker({
             format: 'DD/MM/YYYY HH:mm',
         });

@@ -90,32 +90,42 @@ def panel_principal(request):
                 paciente = Paciente.objects.get(id=turno.paciente.id)
                 user = User.objects.get(id=paciente.user.id)
                 pacientes[turno.id] = user.first_name +" "+ user.last_name 
-    
+
+    #Calcula las fechas sugiente y anteriror
+    anterior_semana = (fecha - timedelta(days=fecha.weekday())) - timedelta(days=7)
+    siguiente_semana = (fecha - timedelta(days=fecha.weekday())) + timedelta(days=7)
+
+
     if request.method == 'GET':
         form_crear_turno = CrearTurno(medico=medico)
         return render(request, 'medicos/panel_principal.html', 
             {'turnos':turnos, 
             'pacientes':pacientes, 
             'form_crear_turno':form_crear_turno, 
-            'siguiente_semana':fecha + timedelta(days=7),
-            'anterior_semana':fecha - timedelta(days=7)
+            'siguiente_semana':siguiente_semana,
+            'anterior_semana':anterior_semana,
+            'fecha_mostrada': fecha
             })
     else:
         form_crear_turno = CrearTurno(request.POST,medico=medico)
         if form_crear_turno.is_valid():
             form_crear_turno.save()
-            return HttpResponseRedirect('/medicos')
+            #Sirve para llevar al usuario a ver la semana en la cual se inserto la fecha
+            fecha_guardada = form_crear_turno.cleaned_data['fecha']
+            fecha_guardada = str(fecha_guardada.day) + "-" + str(fecha_guardada.month) + "-" + str(fecha_guardada.year)
+            return HttpResponseRedirect('/medicos?fecha='+fecha_guardada)
         else:
             return render(request, 'medicos/panel_principal.html', 
                 {'turnos':turnos, 
                 'pacientes':pacientes, 
                 'form_crear_turno':form_crear_turno, 
-                'siguiente_semana':fecha + timedelta(days=7),
-                'anterior_semana':fecha - timedelta(days=7)
+                'siguiente_semana':siguiente_semana,
+                'anterior_semana':anterior_semana,
+                'fecha_mostrada': fecha
                 })
 
 @user_passes_test(verifica_medico)
-def cambiar_estado_turno(request, id):
+def cambiar_estado_turno(request, id, fecha_actual):
     medico = Medico.objects.get(user=request.user.id)
     try:
         turno = Turno.objects.get(medico=medico.id, id=id)
@@ -124,11 +134,12 @@ def cambiar_estado_turno(request, id):
     if(turno):
         turno.completado = not turno.completado 
         turno.save()    
-    return HttpResponseRedirect('/medicos')
+
+    return HttpResponseRedirect('/medicos?fecha='+fecha_actual)
 
 
 @user_passes_test(verifica_medico)
-def eliminar_turno(request, id):
+def eliminar_turno(request, id, fecha_actual):
     medico = Medico.objects.get(user=request.user.id)
     try:
         turno = Turno.objects.get(medico=medico.id, id=id)
@@ -139,4 +150,4 @@ def eliminar_turno(request, id):
             #To-do enviar correo al paciente
             pass
         turno.delete()  
-    return HttpResponseRedirect('/medicos')
+    return HttpResponseRedirect('/medicos?fecha='+fecha_actual)
