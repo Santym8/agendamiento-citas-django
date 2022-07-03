@@ -1,34 +1,51 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pacientes</title>
-</head>
-
-<body>
-
-    <header>
-        <h1>Panel Paciente</h1>
-    </header>
-    <nav>
-        <ul>
-            <li>Inicio</li>
-            <li>Cuenta</li>
-            <li>Cerrar Sesión</li>
-        </ul>
-    </nav>
-    <main>
-        {% block contenido %} {% endblock %}
-    </main>
-
-    <footer>
-        Pie de Pagina
-    </footer>
+{% extends "pacientes/base.html" %} {% block contenido %}
 
 
-</body>
+<!-- Mensajes -->
+{% if mensaje != None %}
+<div class="mensaje">{{mensaje}}</div>
 
-</html>
+{% endif %}
+
+
+
+<div class="especialidades">
+    {% for especialidad in especialidades %}
+    <a href="{{especialidad.nombre}}">{{especialidad.nombre}}</a> {% endfor %}
+</div>
+
+
+<div id="controles_fecha">
+    <a href="?fecha={{anterior_semana.day}}-{{anterior_semana.month}}-{{anterior_semana.year}}">Anterior
+        {{anterior_semana}}</a>
+    <a href="?fecha={{siguiente_semana.day}}-{{siguiente_semana.month}}-{{siguiente_semana.year}}">Siguiente
+        {{siguiente_semana}}</a>
+</div>
+
+
+<div id="contenedor_tabla_turno">
+    <table class="datatable">
+        <thead>
+            <tr>
+                <th>Accion</th>
+                <th>Hora</th>
+                <th>Medico</th>
+            </tr>
+        </thead>
+        {% for dia, turnos_dia in turnos.items %}
+        <tr>
+            <td colspan="5">
+                {{dia.day}}/{{dia.month}}/{{dia.year}}
+            </td>
+        </tr>
+        {% for turno in turnos_dia %}
+        <tr>
+            <td><a href="agendar_cita/{{turno.id}}/{{fecha_mostrada.day}}-{{fecha_mostrada.month}}-{{fecha_mostrada.year}}/{{especialidad_mostrada}}">Agendar</a></td>
+            <td>{{turno.fecha|date:' H:i'}}</td>
+            <td>{{medicos|get_value:turno.id}}</td>
+        </tr>
+        {% endfor %} {% endfor %}
+    </table>
+</div>
+</div>
+{% endblock %}
