@@ -152,6 +152,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'SantymPruebas'
 
-#Configuraion de Email verificacion
+
 LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = "login"
+#Configuraion de Email verificacion
 VERIFICATION_SUCCESS_TEMPLATE = None

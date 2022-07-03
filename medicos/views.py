@@ -5,6 +5,8 @@ from django.core.files.base import ContentFile
 from django.contrib.auth.decorators import user_passes_test
 from django.template.defaulttags import register
 from django.http import HttpResponseRedirect
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 #Modelos
 from .models import Medico, Especialidad, Turno
 from django.contrib.auth.models import User, Group
@@ -44,7 +46,7 @@ def registro(request):
         medico_form = MedicoForm()
         return render(request, 'medicos/registro.html', {'form_usuario': user_form, 'form_medico':medico_form})
 
-  
+#---------------------------------------------------------Panel Principal--------------------------------  
 
 def verifica_medico(user):
     return user.groups.filter(name='Medicos').exists()
@@ -151,3 +153,7 @@ def eliminar_turno(request, id, fecha_actual):
             pass
         turno.delete()  
     return HttpResponseRedirect('/medicos?fecha='+fecha_actual)
+
+
+
+

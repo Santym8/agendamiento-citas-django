@@ -25,7 +25,8 @@
     left: 0;
     z-index: 2;
 }
-.head-bars{
+
+.head-bars {
     font-size: 30px;
     display: none;
     cursor: pointer;
@@ -62,10 +63,18 @@
     line-height: 70px;
 }
 
-.content{
+.link {
+    text-decoration: none !important;
+    color: #ffff !important;
+}
+
+.content {
     margin-bottom: 20px;
 }
+
+
 /* PANEL PRINCIPAL MEDICO */
+
 .panelmed-principal {
     display: flex;
     flex-direction: column;
@@ -92,17 +101,20 @@
     z-index: 1;
 }
 
-.date{
+.date {
     border: 1px solid #320b0ba2;
     border-radius: 5px;
 }
-.input-group-text{
+
+.input-group-text {
     border-left: 1px solid #320b0b;
 }
-.input-group-text:hover{
+
+.input-group-text:hover {
     background-color: #851717;
     color: white;
 }
+
 .date-submit {
     margin: 0px 20px;
     width: 60px;
@@ -110,16 +122,19 @@
     border-radius: 5px;
     cursor: pointer;
 }
-.date-submit:hover{
+
+.date-submit:hover {
     background-color: #851717;
     color: white;
 }
-.errors{
+
+.errors {
     text-align: center;
     margin-top: 10px;
     color: #ff0c0c;
     font-size: bold 15px;
 }
+
 #controles_fecha {
     display: flex;
     justify-content: space-between;
@@ -129,7 +144,10 @@
 #controles_fecha a {
     color: #320b0b;
 }
+
+
 /* div tabla */
+
 #contenedor_tabla_turno {
     width: 80%;
     display: flex;
@@ -144,7 +162,6 @@
     border: solid 1px #320b0ba2;
     box-shadow: 1px 1px 20px 7px #031313b3;
     font-family: "Roboto", sans-serif;
-
 }
 
 .datatable thead {
@@ -165,40 +182,52 @@
 .datatable tr:hover td {
     background-color: #bb949481;
 }
-.state-link, .state-link:hover{
+
+.state-link,
+.state-link:hover {
     text-decoration: none;
     color: white;
 }
-.state-div{
+
+.state-div {
     border-radius: 5px;
-    padding: 0;   
+    padding: 0;
     text-align: center;
     width: 45%;
 }
-.complete{
-    background-color:rgb(23, 222, 23);
+
+.complete {
+    background-color: rgb(23, 222, 23);
     border: 1px solid #ffff;
 }
-.incomplete{
+
+.incomplete {
     background-color: brown;
     border: 1px solid #0000;
 }
-.delete-td{
+
+.delete-td {
     max-width: 30px;
 }
-.delete-link{
+
+.delete-link {
     align-content: center;
     width: 5%;
 }
-.delete{
+
+.delete {
     margin-left: 10px;
     width: 100%;
 }
-.img-delete{
+
+.img-delete {
     width: 10%;
     min-width: 15px;
 }
+
+
 /* FIN PANEL PRINCIPAL MEDICO */
+
 .foot {
     width: 100%;
     display: flex;
@@ -211,34 +240,34 @@
 }
 
 @media (max-width:825px) {
-    .content{
+    .content {
         margin-top: 30px;
     }
-    .base-body{
+    .base-body {
         padding-left: 5px;
         padding-right: 5px;
     }
-    .input-group{
+    .input-group {
         width: 60%;
     }
-    .input-group-text{
+    .input-group-text {
         margin-bottom: 20px;
     }
-    #controles_fecha{
+    #controles_fecha {
         font-size: 20px;
-        margin-top:30px;
+        margin-top: 30px;
         text-align: center;
     }
-    .datatable{
+    .datatable {
         margin-top: 70px;
     }
-    .state-div{
-        width:70%;
+    .state-div {
+        width: 70%;
     }
 }
 
 @media (max-width:478px) {
-    .nav-list{
+    .nav-list {
         flex-direction: column;
         margin-right: 10px;
         background-color: #320b0b;
@@ -253,35 +282,35 @@
         left: 100%;
         transition: left 0.3s;
     }
-    .nav-list-item{
+    .nav-list-item {
         line-height: 80px;
         font-size: 20px;
     }
-    .nav-list-item:hover{
+    .nav-list-item:hover {
         color: #ff0c0c;
     }
-    .head-bars{
+    .head-bars {
         display: block;
         margin-right: 20px;
     }
-    .nav-list_visible{
+    .nav-list_visible {
         left: 0;
     }
-    .content{
+    .content {
         margin-top: 30px;
     }
-    .base-body{
+    .base-body {
         padding-left: 5px;
         padding-right: 5px;
     }
-    #controles_fecha{
-        margin:20px 10px;
+    #controles_fecha {
+        margin: 20px 10px;
         text-align: center;
     }
-    .datatable{
+    .datatable {
         margin-top: 50px;
     }
-    .state-div{
-        width:100%;
+    .state-div {
+        width: 100%;
     }
 }
