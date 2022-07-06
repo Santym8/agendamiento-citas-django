@@ -1,51 +1,54 @@
 {% extends "pacientes/base.html" %} {% block contenido %}
 
-
-<!-- Mensajes -->
-{% if mensaje != None %}
-<div class="mensaje">{{mensaje}}</div>
-
-{% endif %}
-
-
-
-<div class="especialidades">
-    {% for especialidad in especialidades %}
-    <a href="{{especialidad.nombre}}">{{especialidad.nombre}}</a> {% endfor %}
-</div>
-
-
-<div id="controles_fecha">
-    <a href="?fecha={{anterior_semana.day}}-{{anterior_semana.month}}-{{anterior_semana.year}}">Anterior
-        {{anterior_semana}}</a>
-    <a href="?fecha={{siguiente_semana.day}}-{{siguiente_semana.month}}-{{siguiente_semana.year}}">Siguiente
-        {{siguiente_semana}}</a>
-</div>
-
-
-<div id="contenedor_tabla_turno">
-    <table class="datatable">
-        <thead>
+<div class="panelpac-principal">
+    <div class="especialidades">
+        <div class="especialidades__title">
+            <p>Especialidades</p>
+        </div>
+        {% for especialidad in especialidades %}
+        <a class="especialidad-link" href="{{especialidad.nombre}}">{{especialidad.nombre}}</a> - {% endfor %}
+    </div>
+    <!-- Mensajes -->
+    {% if mensaje != None %}
+    <div class="mensaje">-- {{mensaje}} --</div>
+    {% endif %}
+    <div class="controles">
+        <div id="controles_fecha">
+            <a href="?fecha={{anterior_semana.day}}-{{anterior_semana.month}}-{{anterior_semana.year}}">Anterior
+                {{anterior_semana}}</a>
+            <a href="?fecha={{siguiente_semana.day}}-{{siguiente_semana.month}}-{{siguiente_semana.year}}">Siguiente
+                {{siguiente_semana}}</a>
+        </div>
+    </div>
+    <div class="tabla-title"><h4>Turnos Disponibles</h4></div>
+    <div id="contenedor_tabla_turno">
+        <table class="datatable">
+            <thead>
+                <tr>
+                    <th>Acción</th>
+                    <th>Hora</th>
+                    <th>Médico</th>
+                </tr>
+            </thead>
+            {% for dia, turnos_dia in turnos.items %}
             <tr>
-                <th>Accion</th>
-                <th>Hora</th>
-                <th>Medico</th>
+                <td colspan="5">
+                    {{dia.day}}/{{dia.month}}/{{dia.year}}
+                </td>
             </tr>
-        </thead>
-        {% for dia, turnos_dia in turnos.items %}
-        <tr>
-            <td colspan="5">
-                {{dia.day}}/{{dia.month}}/{{dia.year}}
-            </td>
-        </tr>
-        {% for turno in turnos_dia %}
-        <tr>
-            <td><a href="agendar_cita/{{turno.id}}/{{fecha_mostrada.day}}-{{fecha_mostrada.month}}-{{fecha_mostrada.year}}/{{especialidad_mostrada}}">Agendar</a></td>
-            <td>{{turno.fecha|date:' H:i'}}</td>
-            <td>{{medicos|get_value:turno.id}}</td>
-        </tr>
-        {% endfor %} {% endfor %}
-    </table>
-</div>
+            {% for turno in turnos_dia %}
+            <tr>
+                <td>
+                    <a class="agendar-link"
+                        href="agendar_cita/{{turno.id}}/{{fecha_mostrada.day}}-{{fecha_mostrada.month}}-{{fecha_mostrada.year}}/{{especialidad_mostrada}}">
+                        <div class="agendar-div">Agendar</div>
+                    </a>
+                </td>
+                <td>{{turno.fecha|date:' H:i'}}</td>
+                <td>{{medicos|get_value:turno.id}}</td>
+            </tr>
+            {% endfor %} {% endfor %}
+        </table>
+    </div>
 </div>
 {% endblock %}

@@ -1,0 +1,262 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+}
+.base-body {
+    padding: 100px 20px 0;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
+.head {
+    background-color: #0f244f;
+    color: #ffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.title-app{
+    text-align: center;
+}
+.head-bars {
+    font-size: 30px;
+    display: none;
+    cursor: pointer;
+}
+.head__nav {
+    height: 80px;
+    display: flex;
+}
+
+.head__logo {
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+}
+.logo {
+    width: 7%;
+    margin-right: 10px;
+}
+
+.img-logo {
+    width: 100%;
+    min-width: 30px;
+}
+
+.nav-list {
+    display: flex;
+    margin: 0px 30px 0px 0px;
+    list-style: none;
+}
+
+.nav-list-item {
+    margin: 0 15px;
+    display: flex;
+    align-items: center;
+}
+
+.link {
+    text-decoration: none !important;
+    color: #ffff !important;
+}
+
+.content {
+    margin-bottom: 20px;
+}
+
+
+/* PANEL PRINCIPAL PACIENTE */
+.panelpac-principal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mensaje {
+    text-align: center;
+    margin-top: 10px;
+    color: #ff0c0c;
+    font-size:20px;
+    font-family: bold "Roboto", sans-serif;
+}
+.controles{
+    width: 100%;
+}
+#controles_fecha {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 100px 20px 100px;
+}
+#controles_fecha a {
+    color: brown;
+} 
+.especialidades{
+    text-align: center;
+}
+.especialidades__title p{
+    font-size: 20px;
+    color: brown;
+}
+.especialidad-link{
+    text-decoration: none;
+    color: #0f244f;
+}
+.especialidad-link:hover{
+    color: brown;
+}
+
+#contenedor_tabla_turno {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.datatable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    box-shadow: 1px 1px 20px 7px #031313b3;
+    border: solid 1px #06132cef;
+    font-family: "Roboto", sans-serif;
+}
+
+.datatable thead {
+    background-color: #0f244f;
+    color: white;
+    border-bottom: solid 5px #06132cef;
+}
+
+.datatable th,
+.datatable td {
+    padding: 10px;
+}
+
+.datatable tr:nth-child(even) {
+    background-color: #dddd;
+}
+
+.datatable tr:hover td {
+    background-color: #8983d081;
+}
+.agendar-link, .agendar-link:hover{
+    text-decoration: none;
+    color: white;
+}
+.agendar-div{
+    border-radius: 5px;
+    padding: 0;
+    text-align: center;
+    width: 45%;
+    background-color: rgb(23, 222, 23);
+    border: none;
+}
+
+.table-title h4{
+    color: #0f244f;
+} 
+
+/* FIN PANEL PRINCIPAL PACIENTE */
+
+.foot {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.copy {
+    width: 100%;
+    text-align: center;
+}
+
+@media (max-width:825px) {
+    .nav-list {
+        margin: 0px;
+    }
+    .content {
+        margin-top: 30px;
+    }
+    .base-body {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    #controles_fecha {
+        margin: 20px 10px;
+        text-align: justify;
+        align-items: center;
+    }
+    .datatable {
+        margin-top: 40px;
+    }
+    .agendar-div {
+        width: 80%;
+    }
+}
+
+@media (max-width:536px) {
+    .title-app{
+        margin: auto;
+    }
+    .title-app h3{
+        font-size: 25px;
+    }
+    .nav-list {
+        flex-direction: column;
+        margin-right: 10px;
+        background-color: #06132cef;
+        position: fixed;
+        left: 0;
+        top: 70px;
+        width: 100%;
+        align-items: center;
+        height: calc(100% - 70px);
+        overflow-y: auto;
+        padding-top: 20px;
+        left: 100%;
+        transition: left 0.3s;
+    }
+    .nav-list-item {
+        line-height: 80px;
+        font-size: 20px;
+    }
+    .head-bars {
+        display: block;
+        margin-right: 20px;
+    }
+    .nav-list_visible {
+        left: 0;
+    }
+    .content {
+        margin-top: 30px;
+    }
+    .base-body {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    #controles_fecha {
+        margin: 20px 10px;
+        text-align: justify;
+        align-items: center;
+    }
+    #controles_fecha a{
+        margin: 10px;
+    }
+    .datatable {
+        margin-top: 20px;
+    }
+    .agendar-div {
+        width: 100%;
+    }
+}

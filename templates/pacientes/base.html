@@ -22,37 +22,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/c059ec776f.js" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="../../static/css/basePaciente.css">
     <title>Agenda Médica</title>
 </head>
 
 <body class="base-body">
-
-
-    <header>
-        <h3>Agenda Médica</h3>
-    </header>
-
-    <nav>
-        <ul>
-            <li><a class="link" href="">Inicio</a></li>
-            <li><a class="link" href="">Mis Citas</a></li>
-            <li><a class="link" href="">Cuenta</a></li>
-            <li><a class="link" href="{% url 'logout-paciente' %}">Cerrar Sesión</a></li>
-        </ul>
-    </nav>
-
-
-    <main>
+    <div class="head">
+        <div class="head__logo">
+            <div class="logo">
+                <img class="img-logo" src="{% static '\medicos\img\CitasMedicas.png' %}" alt="" />
+            </div>
+            <header class="title-app">
+                <h3>Agenda Cita Médica</h3>
+            </header>
+        </div>
+        <i class="fa-solid fa-bars head-bars"></i>
+        <nav class="head__nav">
+            <ul class="nav-list  .nav-list_visible">
+                <li class="nav-list-item"><a class="link" href="">Inicio</a></li>
+                <li class="nav-list-item"><a class="link" href="">Mis Citas</a></li>
+                <li class="nav-list-item"><a class="link" href="">Cuenta</a></li>
+                <li class="nav-list-item"><a class="link" href="{% url 'logout-paciente' %}">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </div>
+    <main class="content">
         {% block contenido %} {% endblock %}
     </main>
 
-    <footer>
-
+    <footer class="foot">
+        <div class="copy">
+            <h6>&copy; 2022 Agendamiento de Citas Médicas UTN</h6>
+        </div>
     </footer>
-
-
 </body>
+<script>
+    const headBars = document.querySelector('.head-bars')
+    const navMenu = document.querySelector('.nav-list')
+
+    headBars.addEventListener("click", () => {
+        navMenu.classList.toggle("nav-list_visible")
+    })
+</script>
 
 {% block scripts %} {% endblock %}
 
