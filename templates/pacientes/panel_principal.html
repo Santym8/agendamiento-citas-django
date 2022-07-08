@@ -28,6 +28,7 @@
                     <th>Acción</th>
                     <th>Hora</th>
                     <th>Médico</th>
+                    <th>Dirección</th>
                 </tr>
             </thead>
             {% for dia, turnos_dia in turnos.items %}
@@ -46,6 +47,7 @@
                 </td>
                 <td>{{turno.fecha|date:' H:i'}}</td>
                 <td>{{medicos|get_value:turno.id}}</td>
+                <td>{{direcciones_medicos|get_value:turno.id}}</td>
             </tr>
             {% endfor %} {% endfor %}
         </table>

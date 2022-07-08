@@ -96,7 +96,7 @@ class UserForm(forms.ModelForm):
 class MedicoForm(forms.ModelForm):
     class Meta:
         model = Medico
-        fields = ['especialidad', 'titulo_acreditacion_medica']
+        fields = ['especialidad', 'titulo_acreditacion_medica', 'direccion']
 
     fecha_nacimiento = forms.DateField(
         widget=forms.DateInput(attrs={"placeholder":"(yyyy-mm-dd)"}), 

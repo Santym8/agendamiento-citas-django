@@ -92,13 +92,15 @@ def panel_principal(request, especialidad=None):
 
     #Guarda el nombre completo de cada Medico de un turno
     medicos = {}
+    direcciones_medicos = {}
     for turnos_dia in turnos:
         turnos_dia = turnos[turnos_dia]
         for turno in turnos_dia:
             medico = Medico.objects.get(id=turno.medico.id)
             user = User.objects.get(id=medico.user.id)
             medicos[turno.id] = user.first_name +" "+ user.last_name 
-
+            direcciones_medicos[turno.id] = medico.direccion
+            
 
     #Calcula las fechas sugiente y anteriror
     anterior_semana = (fecha - timedelta(days=fecha.weekday())) - timedelta(days=7)
@@ -107,6 +109,7 @@ def panel_principal(request, especialidad=None):
     return render(request, 'pacientes/panel_principal.html', 
         {'turnos':turnos, 
         'medicos':medicos, 
+        'direcciones_medicos':direcciones_medicos,
         'siguiente_semana':siguiente_semana,
         'anterior_semana':anterior_semana,
         'especialidad_mostrada':especialidad.nombre,

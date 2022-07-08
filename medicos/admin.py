@@ -8,7 +8,7 @@ class EspecialidadAdmin(admin.ModelAdmin):
 
 
 class MedicoAdmin(admin.ModelAdmin):
-    list_display = ['id','user','fecha_nacimiento','numero_celular','especialidad','titulo_acreditacion_medica', 'verificado', 'pdf']
+    list_display = ['id','user','fecha_nacimiento','numero_celular','especialidad','direccion','titulo_acreditacion_medica', 'verificado', 'pdf']
     list_filter = ['verificado']
     def pdf(self, obj):
         return format_html('<a href="{}"> Ver </a>', obj.titulo_acreditacion_medica.url)

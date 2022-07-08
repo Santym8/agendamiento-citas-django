@@ -35,7 +35,8 @@ def registro(request):
                 especialidad=medico_form.cleaned_data['especialidad'],
                 fecha_nacimiento=medico_form.cleaned_data['fecha_nacimiento'],
                 numero_celular=medico_form.cleaned_data['numero_celular'],
-                titulo_acreditacion_medica=medico_form.cleaned_data['titulo_acreditacion_medica'])
+                titulo_acreditacion_medica=medico_form.cleaned_data['titulo_acreditacion_medica'],
+                direccion=medico_form.cleaned_data['direccion'])
             nuevo_medico.save()
             return render(request,'validacion_email/email.html',{'email':user_form['email']})
             #return HttpResponse("Medicos funciona")

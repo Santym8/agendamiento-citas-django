@@ -127,7 +127,7 @@
 .datatable {
     width: 100%;
     border-collapse: collapse;
-    text-align: left;
+    text-align: center;
     box-shadow: 1px 1px 20px 7px #031313b3;
     border: solid 1px #06132cef;
     font-family: "Roboto", sans-serif;
