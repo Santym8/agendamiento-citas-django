@@ -39,8 +39,8 @@
         <i class="fa-solid fa-bars head-bars"></i>
         <nav class="head__nav">
             <ul class="nav-list  .nav-list_visible">
-                <li class="nav-list-item"><a class="link" href="">Inicio</a></li>
-                <li class="nav-list-item"><a class="link" href="">Mis Citas</a></li>
+                <li class="nav-list-item"><a class="link" href="{% url 'panel_pacientes' %}">Inicio</a></li>
+                <li class="nav-list-item"><a class="link" href="{% url 'mis_citas' %}">Mis Citas</a></li>
                 <li class="nav-list-item"><a class="link" href="">Cuenta</a></li>
                 <li class="nav-list-item"><a class="link" href="{% url 'logout-paciente' %}">Cerrar Sesión</a></li>
             </ul>

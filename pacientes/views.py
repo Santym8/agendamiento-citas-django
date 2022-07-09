@@ -12,6 +12,7 @@ from medicos.models import Turno, Medico, Especialidad
 from .forms import UserForm, PacienteForm
 #Python
 from datetime import datetime, timedelta, date
+from django.utils import timezone
     
 def registro(request):
     if request.method == 'POST':
@@ -136,3 +137,100 @@ def agendar_cita(request, id_turno, fecha_mostrada, especialidad_mostrada):
         return HttpResponseRedirect('/pacientes/'+ especialidad_mostrada+ '?fecha='+fecha_mostrada+'&mensaje=Error: El turno se ha ocupado')
 
     
+#----------------------------------------------Mis Citas--------------------------------
+
+
+
+def get_mis_citas_agendados_semana(fecha, id_especialidad, id_paciente):
+    inicio_semana = fecha - timedelta(days=fecha.weekday())
+    fin_semana = inicio_semana + timedelta(days=7)
+
+    #Busca todos los turnos en las fechas establecidas y de la especialidad definida, EL truno debe estar libre y no completado
+    turnos = Turno.objects.filter(fecha__gte=inicio_semana, fecha__lt=fin_semana,paciente=id_paciente, medico__especialidad=id_especialidad).order_by('fecha')
+
+    fechas_agrupadas = {}
+    for i in range(7):
+        fecha_grupo = inicio_semana+timedelta(days=i)
+        fechas_agrupadas[fecha_grupo] = turnos.filter(fecha__gte=fecha_grupo, fecha__lt=fecha_grupo+timedelta(days=1))
+
+    return fechas_agrupadas
+
+@user_passes_test(verifica_paciente)
+def mis_citas(request, especialidad=None):
+
+
+    #Mensaje a deplegarse
+    mensaje = request.GET.get('mensaje')
+
+    if(especialidad is None):
+        #Escoje la primiera especialidad encontrada
+            especialidad = Especialidad.objects.all()[0]
+    else:
+        #Verifica que la especialidad exista
+        try:
+            especialidad = Especialidad.objects.get(nombre=especialidad)
+        except Especialidad.DoesNotExist:
+            especialidad = Especialidad.objects.all()[0]
+
+
+    #Recibe la fecha a mostrarse
+    fecha = request.GET.get('fecha')
+    if(fecha is None):
+        fecha = date.today()
+    else:
+        fecha = datetime.strptime(fecha, '%d-%m-%Y')
+    #Recibe el id de la especialidad a mostrarse
+   
+    paciente = Paciente.objects.get(user=request.user.id)
+
+    turnos = get_mis_citas_agendados_semana(fecha, especialidad.id,paciente)
+
+    #Guarda el nombre completo de cada Medico de un turno
+    medicos = {}
+    direcciones_medicos = {}
+    for turnos_dia in turnos:
+        turnos_dia = turnos[turnos_dia]
+        for turno in turnos_dia:
+            medico = Medico.objects.get(id=turno.medico.id)
+            user = User.objects.get(id=medico.user.id)
+            medicos[turno.id] = user.first_name +" "+ user.last_name 
+            direcciones_medicos[turno.id] = medico.direccion
+            
+
+    #Calcula las fechas sugiente y anteriror
+    anterior_semana = (fecha - timedelta(days=fecha.weekday())) - timedelta(days=7)
+    siguiente_semana = (fecha - timedelta(days=fecha.weekday())) + timedelta(days=7)
+
+    return render(request, 'pacientes/mis_turnos.html', 
+        {'turnos':turnos, 
+        'medicos':medicos, 
+        'direcciones_medicos':direcciones_medicos,
+        'siguiente_semana':siguiente_semana,
+        'anterior_semana':anterior_semana,
+        'especialidad_mostrada':especialidad.nombre,
+        'fecha_mostrada': fecha,
+        'especialidades':Especialidad.objects.all(),
+        'mensaje':mensaje
+        })
+
+
+
+
+@user_passes_test(verifica_paciente)
+def cancelar_cita(request, id_turno, fecha_mostrada, especialidad_mostrada):
+    try:
+        paciente = Paciente.objects.get(user=request.user.id)
+        turno = Turno.objects.get(id=id_turno, paciente=paciente)
+        #Comprueba que el turno no esté completado
+        if(turno.completado is True):
+            return HttpResponseRedirect('/pacientes/mis_citas/'+ especialidad_mostrada+ '?fecha='+fecha_mostrada+'&mensaje=Error: El turno ya se ha completado')
+        if(turno.fecha < timezone.now()):
+            return HttpResponseRedirect('/pacientes/mis_citas/'+ especialidad_mostrada+ '?fecha='+fecha_mostrada+'&mensaje=Error: No puedes Cancelar un Turno Anterior')
+        turno.paciente = None
+        turno.save()
+        return HttpResponseRedirect('/pacientes/mis_citas/'+ especialidad_mostrada+ '?fecha='+fecha_mostrada+'&mensaje=Cita Cancelada')
+    except Turno.DoesNotExist:
+        return HttpResponseRedirect('/pacientes/mis_citas/'+ especialidad_mostrada+ '?fecha='+fecha_mostrada+'&mensaje=Error')
+
+
+

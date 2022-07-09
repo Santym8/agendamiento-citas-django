@@ -1,0 +1,60 @@
+{% extends "pacientes/base.html" %} {% block contenido %}
+
+<div class="panelpac-principal">
+    <div class="especialidades">
+        <div class="especialidades__title">
+            <p>Especialidades</p>
+        </div>
+        {% for especialidad in especialidades %}
+        <a class="especialidad-link" href="{{especialidad.nombre}}">{{especialidad.nombre}}</a> - {% endfor %}
+    </div>
+    <!-- Mensajes -->
+    {% if mensaje != None %}
+    <div class="mensaje">-- {{mensaje}} --</div>
+    {% endif %}
+    <div class="controles">
+        <div id="controles_fecha">
+            <a href="?fecha={{anterior_semana.day}}-{{anterior_semana.month}}-{{anterior_semana.year}}">Anterior
+                {{anterior_semana}}</a>
+            <a href="?fecha={{siguiente_semana.day}}-{{siguiente_semana.month}}-{{siguiente_semana.year}}">Siguiente
+                {{siguiente_semana}}</a>
+        </div>
+    </div>
+    <div class="tabla-title">
+        <h4>Citas Agendadas {{especialidad_mostrada}}</h4>
+    </div>
+    <div id="contenedor_tabla_turno">
+        <table class="datatable">
+            <thead>
+                <tr>
+                    <th>Acción</th>
+                    <th>Hora</th>
+                    <th>Estado</th>
+                    <th>Médico</th>
+                    <th>Dirección</th>
+                </tr>
+            </thead>
+            {% for dia, turnos_dia in turnos.items %}
+            <tr>
+                <td colspan="5">
+                    {{dia.day}}/{{dia.month}}/{{dia.year}}
+                </td>
+            </tr>
+            {% for turno in turnos_dia %}
+            <tr>
+                <td>
+                    <a class="agendar-link" href="cancelar_cita/{{turno.id}}/{{fecha_mostrada.day}}-{{fecha_mostrada.month}}-{{fecha_mostrada.year}}/{{especialidad_mostrada}}">
+                        <div class="agendar-div" style="background-color: red;">Cancelar</div>
+                    </a>
+                </td>
+                <td>{{turno.fecha|date:' H:i'}}</td>
+                <th>{% if turno.completado %} Completado {% else %} No Completado{% endif %}
+                </th>
+                <td>{{medicos|get_value:turno.id}}</td>
+                <td>{{direcciones_medicos|get_value:turno.id}}</td>
+            </tr>
+            {% endfor %} {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
