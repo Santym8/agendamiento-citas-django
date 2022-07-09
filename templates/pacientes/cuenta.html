@@ -1,0 +1,35 @@
+{% extends "pacientes/base.html" %} {% block contenido %}
+
+<!-- Mensaje -->
+{% if mensaje != None %}
+<div class="mensaje">-- {{mensaje}} --</div>
+{% endif %}
+<!-- Formulario Actualizacion -->
+<form action="datos" method="post">
+    <div class="contenido-formulario">
+        {% csrf_token %} {% for campo in formulario_actualizacion %}
+        <div>
+            {{ campo.errors }} {{ campo.label_tag }} {{ campo }}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="guardar">
+        <input id="Boton-submit" type="submit" value="Enviar" style=" width: 150px;">
+    </div>
+</form>
+
+<!-- Formulario Cambiar Contraseña -->
+<form action="contraseña" method="post">
+    <div class="contenido-formulario">
+        {% csrf_token %} {% for campo in formulario_cambiar_contraseña %}
+        <div>
+            {{ campo.errors }} {{ campo.label_tag }} {{ campo }}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="guardar">
+        <input id="Boton-submit" type="submit" value="Enviar" style=" width: 150px;">
+    </div>
+</form>
+
+{% endblock %}

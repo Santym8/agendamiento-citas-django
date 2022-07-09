@@ -4,16 +4,18 @@ from verify_email.email_handler import send_verification_email
 from django.core.files.base import ContentFile
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseRedirect
+from django.contrib.auth import update_session_auth_hash
 #Modelos
 from .models import Paciente
 from django.contrib.auth.models import User, Group
 from medicos.models import Turno, Medico, Especialidad
 #Formularios
-from .forms import UserForm, PacienteForm
+from .forms import UserForm, PacienteForm, ActualizarPacienteForm, CambiarContraseñaForm
 #Python
 from datetime import datetime, timedelta, date
 from django.utils import timezone
     
+#----------------------------------------------Registro Paciente--------------------------------
 def registro(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
@@ -39,8 +41,6 @@ def registro(request):
         user_form = UserForm()
         paciente_form = PacienteForm()
         return render(request, 'pacientes/registro.html', {'user_form': user_form, 'paciente_form':paciente_form})
-
-
 
 #----------------------------------------------Panel Principal--------------------------------
 
@@ -139,8 +139,6 @@ def agendar_cita(request, id_turno, fecha_mostrada, especialidad_mostrada):
     
 #----------------------------------------------Mis Citas--------------------------------
 
-
-
 def get_mis_citas_agendados_semana(fecha, id_especialidad, id_paciente):
     inicio_semana = fecha - timedelta(days=fecha.weekday())
     fin_semana = inicio_semana + timedelta(days=7)
@@ -154,6 +152,7 @@ def get_mis_citas_agendados_semana(fecha, id_especialidad, id_paciente):
         fechas_agrupadas[fecha_grupo] = turnos.filter(fecha__gte=fecha_grupo, fecha__lt=fecha_grupo+timedelta(days=1))
 
     return fechas_agrupadas
+
 
 @user_passes_test(verifica_paciente)
 def mis_citas(request, especialidad=None):
@@ -214,8 +213,6 @@ def mis_citas(request, especialidad=None):
         })
 
 
-
-
 @user_passes_test(verifica_paciente)
 def cancelar_cita(request, id_turno, fecha_mostrada, especialidad_mostrada):
     try:
@@ -233,4 +230,73 @@ def cancelar_cita(request, id_turno, fecha_mostrada, especialidad_mostrada):
         return HttpResponseRedirect('/pacientes/mis_citas/'+ especialidad_mostrada+ '?fecha='+fecha_mostrada+'&mensaje=Error')
 
 
+
+#----------------------------------Cuenta-----------------------------
+@user_passes_test(verifica_paciente)
+def actualizar_cuenta(request):
+    #Mensaje a deplegarse
+    mensaje = request.GET.get('mensaje')
+
+    user = User.objects.get(id=request.user.id)
+    paciente = Paciente.objects.get(user=user.id)
+
+    data = {
+        'username':user.username,
+        'first_name':user.first_name,
+        'last_name':user.last_name,
+        'email':user.email,
+        'fecha_nacimiento':paciente.fecha_nacimiento,
+        'numero_celular':paciente.numero_celular,
+    }
+    formulario_actualizacion = ActualizarPacienteForm(id_user = request.user.id, data=data)
+    formulario_cambiar_contraseña = CambiarContraseñaForm(id_user=request.user.id)
+    return render(request, 'pacientes/cuenta.html', {'formulario_actualizacion': formulario_actualizacion, 'mensaje':mensaje, 'formulario_cambiar_contraseña':formulario_cambiar_contraseña})
+
+
+@user_passes_test(verifica_paciente)
+def actualizar_datos(request): 
+    user = User.objects.get(id=request.user.id)
+    paciente = Paciente.objects.get(user=user.id)
+    formulario_actualizacion = ActualizarPacienteForm(request.POST, id_user = request.user.id)
+    formulario_cambiar_contraseña = CambiarContraseñaForm(id_user=request.user.id)
+    if formulario_actualizacion.is_valid():
+        user.username = formulario_actualizacion.cleaned_data['username']
+        user.first_name = formulario_actualizacion.cleaned_data['first_name']
+        user.last_name = formulario_actualizacion.cleaned_data['last_name']
+        user.email = formulario_actualizacion.cleaned_data['email']
+        paciente.fecha_nacimiento = formulario_actualizacion.cleaned_data['fecha_nacimiento']
+        paciente.numero_celular = formulario_actualizacion.cleaned_data['numero_celular']
+        user.save()
+        paciente.save()
+        return HttpResponseRedirect('/pacientes/cuenta/?mensaje=Datos Actualizados')
+    else:
+        return render(request, 'pacientes/cuenta.html', {'formulario_actualizacion': formulario_actualizacion, 'mensaje':mensaje, 'formulario_cambiar_contraseña':formulario_cambiar_contraseña})
+
+
+@user_passes_test(verifica_paciente)
+def cambiar_contraseña(request):
+    user = User.objects.get(id=request.user.id)
+    formulario_cambiar_contraseña = CambiarContraseñaForm(request.POST, id_user=request.user.id)
+    if formulario_cambiar_contraseña.is_valid():
+        user = User.objects.get(id=request.user.id)
+        user.password = formulario_cambiar_contraseña.cleaned_data['password']
+        user.save()
+
+        #Actualiza la contraseña de la sesion actual (Evita desconexion)
+        update_session_auth_hash(request, user)
+        
+        return HttpResponseRedirect('/pacientes/cuenta/?mensaje=Contraseña Actualizada')
+    else:
+        paciente = Paciente.objects.get(user=user.id)
+        data = {
+            'username':user.username,
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+            'email':user.email,
+            'fecha_nacimiento':paciente.fecha_nacimiento,
+            'numero_celular':paciente.numero_celular,
+        }
+        formulario_actualizacion = ActualizarPacienteForm(id_user = request.user.id, data=data)
+        return render(request, 'pacientes/cuenta.html', {'formulario_actualizacion': formulario_actualizacion, 'mensaje':None, 'formulario_cambiar_contraseña':formulario_cambiar_contraseña})
+           
 
