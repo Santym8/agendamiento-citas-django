@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from phonenumber_field import formfields
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from django.utils import timezone
 
 from django.contrib.auth.models import User
 from .models import Medico, Turno
@@ -131,8 +132,10 @@ class CrearTurno(forms.Form):
     )
 
     def clean_fecha(self):
-        print(self.cleaned_data['fecha'])
         data = self.cleaned_data['fecha']
+
+        if data < timezone.now():
+            raise ValidationError('No se puede crear un turno con fecha anterior')
         turnos = Turno.objects.filter(medico=self.medico.id, fecha=data)
         if turnos:
             raise ValidationError('Conflicto de Horarios')
