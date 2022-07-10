@@ -108,7 +108,8 @@ def panel_principal(request):
             'form_crear_turno':form_crear_turno, 
             'siguiente_semana':siguiente_semana,
             'anterior_semana':anterior_semana,
-            'fecha_mostrada': fecha
+            'fecha_mostrada': fecha, 
+            'user': request.user
             })
     else:
         form_crear_turno = CrearTurno(request.POST,medico=medico)
@@ -125,7 +126,8 @@ def panel_principal(request):
                 'form_crear_turno':form_crear_turno, 
                 'siguiente_semana':siguiente_semana,
                 'anterior_semana':anterior_semana,
-                'fecha_mostrada': fecha
+                'fecha_mostrada': fecha,
+                'user': request.user
                 })
 
 @user_passes_test(verifica_medico)
