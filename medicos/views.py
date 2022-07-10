@@ -7,12 +7,13 @@ from django.template.defaulttags import register
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from django.contrib.auth import update_session_auth_hash
 #Modelos
 from .models import Medico, Especialidad, Turno
 from django.contrib.auth.models import User, Group
 from pacientes.models import Paciente
 #Formularios
-from .forms import UserForm, MedicoForm, CrearTurno
+from .forms import UserForm, MedicoForm, CrearTurno, ActualizarMedicoForm, CambiarContraseñaForm
 #Python
 from datetime import datetime, timedelta, date
 
@@ -156,5 +157,77 @@ def eliminar_turno(request, id, fecha_actual):
     return HttpResponseRedirect('/medicos?fecha='+fecha_actual)
 
 
+
+#----------------------------------Cuenta-----------------------------
+@user_passes_test(verifica_medico)
+def actualizar_cuenta(request):
+    #Mensaje a deplegarse
+    mensaje = request.GET.get('mensaje')
+
+    user = User.objects.get(id=request.user.id)
+    medico = Medico.objects.get(user=user.id)
+
+    data = {
+        'username':user.username,
+        'first_name':user.first_name,
+        'last_name':user.last_name,
+        'email':user.email,
+        'fecha_nacimiento':medico.fecha_nacimiento,
+        'numero_celular':medico.numero_celular,
+        'direccion':medico.direccion
+    }
+    formulario_actualizacion = ActualizarMedicoForm(id_user = request.user.id, data=data)
+    formulario_cambiar_contraseña = CambiarContraseñaForm(id_user=request.user.id)
+    return render(request, 'medicos/cuenta.html', {'formulario_actualizacion': formulario_actualizacion, 'mensaje':mensaje, 'formulario_cambiar_contraseña':formulario_cambiar_contraseña})
+
+
+@user_passes_test(verifica_medico)
+def actualizar_datos(request): 
+    user = User.objects.get(id=request.user.id)
+    medico = Medico.objects.get(user=user.id)
+    formulario_actualizacion = ActualizarMedicoForm(request.POST, id_user = request.user.id)
+    formulario_cambiar_contraseña = CambiarContraseñaForm(id_user=request.user.id)
+    if formulario_actualizacion.is_valid():
+        user.username = formulario_actualizacion.cleaned_data['username']
+        user.first_name = formulario_actualizacion.cleaned_data['first_name']
+        user.last_name = formulario_actualizacion.cleaned_data['last_name']
+        user.email = formulario_actualizacion.cleaned_data['email']
+        medico.fecha_nacimiento = formulario_actualizacion.cleaned_data['fecha_nacimiento']
+        medico.numero_celular = formulario_actualizacion.cleaned_data['numero_celular']
+        medico.direccion = formulario_actualizacion.cleaned_data['direccion']
+        user.save()
+        medico.save()
+        return HttpResponseRedirect('/medicos/cuenta/?mensaje=Datos Actualizados')
+    else:
+        return render(request, 'medicos/cuenta.html', {'formulario_actualizacion': formulario_actualizacion, 'mensaje':None, 'formulario_cambiar_contraseña':formulario_cambiar_contraseña})
+
+
+@user_passes_test(verifica_medico)
+def cambiar_contraseña(request):
+    user = User.objects.get(id=request.user.id)
+    formulario_cambiar_contraseña = CambiarContraseñaForm(request.POST, id_user=request.user.id)
+    if formulario_cambiar_contraseña.is_valid():
+        user = User.objects.get(id=request.user.id)
+        user.password = formulario_cambiar_contraseña.cleaned_data['password']
+        user.save()
+
+        #Actualiza la contraseña de la sesion actual (Evita desconexion)
+        update_session_auth_hash(request, user)
+        
+        return HttpResponseRedirect('/medicos/cuenta/?mensaje=Contraseña Actualizada')
+    else:
+        medico = Medico.objects.get(user=user.id)
+        data = {
+            'username':user.username,
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+            'email':user.email,
+            'fecha_nacimiento':medico.fecha_nacimiento,
+            'numero_celular':medico.numero_celular,
+            'direccion':medico.direccion
+        }
+        formulario_actualizacion = ActualizarMedicoForm(id_user = request.user.id, data=data)
+        return render(request, 'medicos/cuenta.html', {'formulario_actualizacion': formulario_actualizacion, 'mensaje':None, 'formulario_cambiar_contraseña':formulario_cambiar_contraseña})
+           
 
 

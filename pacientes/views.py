@@ -270,7 +270,7 @@ def actualizar_datos(request):
         paciente.save()
         return HttpResponseRedirect('/pacientes/cuenta/?mensaje=Datos Actualizados')
     else:
-        return render(request, 'pacientes/cuenta.html', {'formulario_actualizacion': formulario_actualizacion, 'mensaje':mensaje, 'formulario_cambiar_contraseña':formulario_cambiar_contraseña})
+        return render(request, 'pacientes/cuenta.html', {'formulario_actualizacion': formulario_actualizacion, 'mensaje':None, 'formulario_cambiar_contraseña':formulario_cambiar_contraseña})
 
 
 @user_passes_test(verifica_paciente)
