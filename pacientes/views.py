@@ -117,7 +117,6 @@ def panel_principal(request, especialidad=None):
         'fecha_mostrada': fecha,
         'especialidades':Especialidad.objects.all(),
         'mensaje':mensaje,
-        'user': request.user
         })
 
 
