@@ -128,8 +128,10 @@ def agendar_cita(request, id_turno, fecha_mostrada, especialidad_mostrada):
         turno = Turno.objects.get(id=id_turno, completado=False, paciente=None)
         paciente = Paciente.objects.get(user=request.user.id)
         #Comprueba conflicto de horarios del paciente
-        if(Turno.objects.filter(fecha=turno.fecha, paciente=paciente.id).exists()):
+        if(Turno.objects.filter(fecha=turno.fecha, paciente=paciente.id).exists()):            
             return HttpResponseRedirect('/pacientes/'+ especialidad_mostrada+ '?fecha='+fecha_mostrada+'&mensaje=Conflicto de Horarios')
+        if(turno.fecha < timezone.now()):
+            return HttpResponseRedirect('/pacientes/'+ especialidad_mostrada+ '?fecha='+fecha_mostrada+'&mensaje=Error: Fecha Anterior')    
         turno.paciente = paciente
         turno.save()
         return HttpResponseRedirect('/pacientes/'+ especialidad_mostrada+ '?fecha='+fecha_mostrada+'&mensaje=Cita Agendada')
