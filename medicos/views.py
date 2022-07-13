@@ -230,4 +230,16 @@ def cambiar_contraseña(request):
         return render(request, 'medicos/cuenta.html', {'formulario_actualizacion': formulario_actualizacion, 'mensaje':None, 'formulario_cambiar_contraseña':formulario_cambiar_contraseña})
            
 
+#--------------------------------Reportes----------------------------
+@user_passes_test(verifica_medico)
+def reportes(request):
+    if request.method == 'GET':
+        return render(request, 'medicos/reportes.html')
 
+@user_passes_test(verifica_medico)
+def reporte_diario(request, fecha):
+    if request.method == 'GET':
+        fecha = datetime.strptime(fecha, '%Y-%m-%d')
+        medico = Medico.objects.get(user=request.user.id)
+        turnos = Turno.objects.filter(fecha__gte=fecha, fecha__lt=fecha+timedelta(days=1), medico=medico.id)
+        return render(request, 'medicos/formato_reporte.html', {'fecha':fecha, 'turnos_totales':turnos.count()})

@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.db.models import Q
 from django.contrib.auth.models import User
 from .models import Medico, Turno
+from .widgets import MonthYearWidget
 
 
 class UserForm(forms.ModelForm):
@@ -280,3 +281,4 @@ class CambiarContraseñaForm(forms.Form):
             raise ValidationError('No coinciden contraseñas')
         return verificar_contraseña
 
+#-----------------------------Formulario--------------------

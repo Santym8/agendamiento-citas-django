@@ -10,6 +10,9 @@ urlpatterns = [
     path('', views.panel_principal, name='panel_medicos'),
     path('cambiar-estado-turno/<int:id>/<fecha_actual>', views.cambiar_estado_turno, name='estado_turno'),
     path('eliminar-turno/<int:id>/<fecha_actual>', views.eliminar_turno, name='estado_turno'),
+    #Reportes
+    path('reportes/', views.reportes, name='reportes'),
+    path('reportes/diario/<fecha>', views.reporte_diario, name='reportes-diario'),
     #Actualizar Cuenta
     path('cuenta/', views.actualizar_cuenta, name='cuenta-medico'),
     path('cuenta/datos', views.actualizar_datos, name='cuenta-medico-datos'),

@@ -1,0 +1,37 @@
+{% extends "medicos/base.html" %} {% load static %}
+<!--  -->
+{% block links %}
+<!-- Links de CCS -->
+
+
+
+{% endblock %}
+
+
+<!-- Bloque de contenido -->
+{% block contenido %}
+
+<!-- Reporte Diario  -->
+<div class="reporte-diario">
+    <h3>Reporte Diario</h3>
+    <input type="date" id="date">
+    <button id="reporte-diario">Ver</button>
+</div>
+
+<!-- Reporte Semanal  -->
+<div class="reporte-semanal">
+    <h3>Reporte Semanal</h3>
+    <input type="week" id="week">
+    <button id="reporte-semanal">Ver</button>
+</div>
+
+<!-- Reporte Mensual  -->
+<div class="reporte-mensual">
+    <h3>Reporte Mensual</h3>
+    <input type="month" id="month">
+    <button id="reporte-mensual">Ver</button>
+</div>
+
+{% endblock %} {% block scripts %}
+<script src="{% static 'js\reportes.js' %}"></script>
+{% endblock %}
