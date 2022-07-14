@@ -217,8 +217,8 @@ class CambiarContraseñaForm(forms.Form):
         super(CambiarContraseñaForm, self).__init__(*args, **kwargs)
 
     contraseña_actual = forms.CharField(required=True, widget=forms.PasswordInput) 
-    password = forms.CharField(required=True, widget=forms.PasswordInput)
-    verificar_contraseña = forms.CharField(required=True, widget=forms.PasswordInput)
+    password = forms.CharField(required=True, widget=forms.PasswordInput, label='Nueva Contraseña')
+    verificar_contraseña = forms.CharField(required=True, widget=forms.PasswordInput, label='Verificar Nueva Contraseña')
 
     def clean_contraseña_actual(self):
         data = self.cleaned_data.get('contraseña_actual')
