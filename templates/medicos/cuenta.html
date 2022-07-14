@@ -3,7 +3,7 @@
 {% block links %}
 <!-- Links de CCS -->
 
-
+<link rel="stylesheet" type="text/css" href="../../static/css/cuentaMedico.css">
 
 {% endblock %}
 
@@ -13,14 +13,38 @@
 
 <!-- Mensaje -->
 {% if mensaje != None %}
-<div class="mensaje">-- {{mensaje}} --</div>
+<dialog id='modal'>
+    <div class='content-modal'>
+        <div class='modal-png'>
+            <img class='img-visto' src='../../static/medicos/img/aceptar.png' alt='Visto'>
+        </div>
+        <div class='modal-msg'>
+            <p>{{mensaje}}</p>
+        </div>
+        <div class='modal-btn'>
+            <button type='button' id='btn-close-modal'>Aceptar</button>
+        </div>
+    </div>
+</dialog>
+<script>
+    const modal = document.querySelector('#modal');
+    const cerrarmodal = document.querySelector('#btn-close-modal');
+    modal.showModal();
+    cerrarmodal.addEventListener('click', () => {
+        modal.close();
+    });
+</script>
+<!-- <div class="mensaje">-- {{mensaje}} --</div> -->
 {% endif %}
+<h3>Actualizar Información</h3>
 <!-- Formulario Actualizacion -->
-<form action="datos" method="post">
+<form class="form-update" action="datos" method="post">
     <div class="contenido-formulario">
         {% csrf_token %} {% for campo in formulario_actualizacion %}
-        <div>
-            {{ campo.errors }} {{ campo.label_tag }} {{ campo }}
+        <div class="form-campo">
+            {{ campo.errors }}
+            {{ campo.label_tag }}
+            {{ campo }}
         </div>
         {% endfor %}
     </div>
@@ -30,11 +54,15 @@
 </form>
 
 <!-- Formulario Cambiar Contraseña -->
-<form action="contraseña" method="post">
+<br>
+<h3>Cambiar Contraseña</h3>
+<form class="form-password" action="contraseña" method="post">
     <div class="contenido-formulario">
         {% csrf_token %} {% for campo in formulario_cambiar_contraseña %}
-        <div>
-            {{ campo.errors }} {{ campo.label_tag }} {{ campo }}
+        <div class="form-campo">
+            {{ campo.errors }} 
+            {{ campo.label_tag }} 
+            {{ campo }}
         </div>
         {% endfor %}
     </div>
