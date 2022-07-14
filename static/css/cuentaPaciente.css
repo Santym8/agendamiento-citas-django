@@ -1,0 +1,79 @@
+.form-update,
+.form-password {
+    width: 75%;
+    font-family: "Montserrat", sans-serif;
+    margin: auto;
+    text-align: left;
+}
+
+.form-update .contenido-formulario {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 115px 115px 115px;
+}
+
+.form-password .contenido-formulario {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 115px 115px;
+}
+
+.form-campo {
+    width: 90%;
+    margin: auto;
+}
+
+.form-campo label {
+    font-size: 18px;
+    font-weight: 200px;
+    color: #051128;
+}
+
+.form-campo input,
+#Boton-submit {
+    height: 42px;
+    border: 1px solid #0f244f;
+    border-radius: 7px;
+    width: 100%;
+    padding: 10px 15px;
+    color: #0f244f;
+    transition: all 0.3s ease;
+    margin-top: 5px;
+}
+
+.errorlist {
+    color: red;
+    list-style: none;
+    margin: 0;
+}
+
+.guardar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#Boton-submit {
+    width: 30%;
+    margin-top: 30px;
+    background-color: #0f244f;
+    color: white;
+}
+
+#Boton-submit:hover {
+    background-color: white;
+    color: #0f244f;
+}
+
+@media (max-width:450px) {
+    .form-update .contenido-formulario{
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: 115px;
+    }
+    .form-password .contenido-formulario{
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: 115px;
+    }
+}

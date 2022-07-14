@@ -25,7 +25,9 @@
     left: 0;
     z-index: 2;
 }
-
+.title-app {
+    text-align: center;
+}
 .head-bars {
     font-size: 30px;
     display: none;
@@ -34,6 +36,7 @@
 
 .head__nav {
     height: 70px;
+    display: flex;
 }
 
 .head__logo {
@@ -59,19 +62,83 @@
 }
 
 .nav-list-item {
-    margin: 0 10px;
-    line-height: 70px;
+    margin: 0 15px;
+    /* line-height: 70px; */
+    display: flex;
+    align-items: center;
 }
 
 .link {
     text-decoration: none !important;
     color: #ffff !important;
 }
-
+.user-name {
+    margin-bottom: 0;
+}
 .content {
     margin-bottom: 20px;
+    text-align: center;
 }
 
+/* MODAL MENSAJE */
+#modal {
+    width: 40%;
+    min-width: 150px;
+    left: 30%;
+    top: 30%;
+    height: 300px;
+    border: none;
+}
+
+.content-modal {
+    margin-top: 20px
+}
+
+.modal-png {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.img-visto {
+    width: 100%;
+    max-width: 150px;
+    min-width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal-msg p {
+    font-size: 30px;
+    color: #851717;
+    text-align: center;
+}
+
+.modal-btn {
+    margin-top: 20px;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#btn-close-modal {
+    width: 100%;
+    font-size: 20px;
+    border: none;
+    border-radius: bold 20px;
+    box-shadow: 5px 5px 20px 10px black;
+    background-color: black;
+    color: #ffff;
+}
+
+#btn-close-modal:hover {
+    background-color: white;
+    color: #851717;
+}
+
+#modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.403);
+}
 
 /* PANEL PRINCIPAL MEDICO */
 
@@ -264,8 +331,28 @@
     .state-div {
         width: 70%;
     }
+    .title-app {
+        margin-left: 10px;
+    }
 }
+@media (max-width:640px) {
+    .modal-msg p {
+        font-size: 25px;
+    }
+}
+@media (max-width:624px) {
+    .title-app h3 {
+        font-size: 25px;
+    }
 
+    .head {
+        height: 100px;
+    }
+
+    .head__nav {
+        height: 100px;
+    }
+}
 @media (max-width:478px) {
     .nav-list {
         flex-direction: column;
@@ -312,5 +399,15 @@
     }
     .state-div {
         width: 100%;
+    }
+    .modal-btn {
+        width: 70%;
+    }
+    .title-app {
+        margin: auto;
+    }
+
+    .title-app h3 {
+        font-size: 25px;
     }
 }
