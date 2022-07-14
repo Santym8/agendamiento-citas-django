@@ -10,7 +10,27 @@
     </div>
     <!-- Mensajes -->
     {% if mensaje != None %}
-    <div class="mensaje">-- {{mensaje}} --</div>
+    <dialog id='modal'>
+        <div class='content-modal'>
+            <div class='modal-png'>
+                <img class='img-visto' src='../../static/medicos/img/CitasMedicas.png' alt='Visto'>
+            </div>
+            <div class='modal-msg'>
+                <p>{{mensaje}}</p>
+            </div>
+            <div class='modal-btn'>
+                <button type='button' id='btn-close-modal'>Aceptar</button>
+            </div>
+        </div>
+    </dialog>
+    <script>
+        const modal = document.querySelector('#modal');
+        const cerrarmodal = document.querySelector('#btn-close-modal');
+        modal.showModal();
+        cerrarmodal.addEventListener('click', () => {
+            modal.close();
+        });
+    </script>
     {% endif %}
     <div class="controles">
         <div id="controles_fecha">

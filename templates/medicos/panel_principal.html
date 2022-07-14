@@ -12,9 +12,30 @@
                 </div>
                 <input class="date-submit" type="submit" value="Crear">
             </form>
-            <div class="errors">
-                {{ form_crear_turno.fecha.errors }}
-            </div>
+            {% if form_crear_turno.fecha.errors %}
+            <dialog id='modal'>
+                <div class='content-modal'>
+                    <div class='modal-png'>
+                        <img class='img-visto' src='../../static/medicos/img/CitasMedicas.png' alt='Visto'>
+                    </div>
+                    <div class='modal-msg'>
+                        <p>{{form_crear_turno.fecha.errors}}</p>
+                    </div>
+                    <div class='modal-btn'>
+                        <button type='button' id='btn-close-modal'>Aceptar</button>
+                    </div>
+                </div>
+            </dialog>
+            <script>
+                const modal = document.querySelector('#modal');
+                const cerrarmodal = document.querySelector('#btn-close-modal');
+                modal.showModal();
+                cerrarmodal.addEventListener('click', () => {
+                    modal.close();
+                });
+            </script>
+            <!-- <div class="mensaje">-- {{mensaje}} --</div> -->
+            {% endif %}
         </div>
         <div id="controles_fecha">
             <a href="/medicos?fecha={{anterior_semana.day}}-{{anterior_semana.month}}-{{anterior_semana.year}}">Anterior
