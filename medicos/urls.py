@@ -12,7 +12,7 @@ urlpatterns = [
     path('eliminar-turno/<int:id>/<fecha_actual>', views.eliminar_turno, name='estado_turno'),
     #Reportes
     path('reportes/', views.reportes, name='reportes'),
-    path('reportes/diario/<fecha>', views.reporte_diario, name='reportes-diario'),
+    path('reportes/<fecha>/<int:tipo>', views.reporte, name='reportes-diario'),
     #Actualizar Cuenta
     path('cuenta/', views.actualizar_cuenta, name='cuenta-medico'),
     path('cuenta/datos', views.actualizar_datos, name='cuenta-medico-datos'),

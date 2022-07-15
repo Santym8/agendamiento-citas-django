@@ -7,7 +7,7 @@ document.getElementById('reporte-mensual').addEventListener('click', reporteMens
 function reporteDiario() {
     data = document.getElementById('date').value;
     if (data != "") {
-        window.open("diario/" + data)
+        window.open(data + "/0")
     }
 }
 
@@ -15,7 +15,7 @@ function reporteDiario() {
 function reporteSemanal() {
     data = document.getElementById('week').value;
     if (data != "") {
-        console.log(data);
+        window.open(data + "/1")
     }
 }
 
@@ -23,6 +23,6 @@ function reporteSemanal() {
 function reporteMensual() {
     data = document.getElementById('month').value;
     if (data != "") {
-        console.log(data);
+        window.open(data + "/2")
     }
 }

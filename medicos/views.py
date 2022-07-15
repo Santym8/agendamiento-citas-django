@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 from django.contrib.auth import update_session_auth_hash
+from django.db.models import Q
 #Modelos
 from .models import Medico, Especialidad, Turno
 from django.contrib.auth.models import User, Group
@@ -16,6 +17,11 @@ from pacientes.models import Paciente
 from .forms import UserForm, MedicoForm, CrearTurno, ActualizarMedicoForm, CambiarContraseñaForm
 #Python
 from datetime import datetime, timedelta, date
+from dateutil import relativedelta
+
+
+
+
 
 
 
@@ -237,9 +243,66 @@ def reportes(request):
         return render(request, 'medicos/reportes.html')
 
 @user_passes_test(verifica_medico)
-def reporte_diario(request, fecha):
+def reporte(request, fecha, tipo):
     if request.method == 'GET':
-        fecha = datetime.strptime(fecha, '%Y-%m-%d')
+
+
         medico = Medico.objects.get(user=request.user.id)
-        turnos = Turno.objects.filter(fecha__gte=fecha, fecha__lt=fecha+timedelta(days=1), medico=medico.id)
-        return render(request, 'medicos/formato_reporte.html', {'fecha':fecha, 'turnos_totales':turnos.count()})
+        user = User.objects.get(id=medico.user.id)
+
+
+        #Obtiene todos los turnos de la fehca
+        fecha_fin = None
+        if(tipo == 0):
+            fecha = datetime.strptime(fecha, '%Y-%m-%d')
+            turnos = Turno.objects.filter(fecha__gte=fecha, fecha__lt=fecha+timedelta(days=1), medico=medico.id)
+        elif(tipo == 1):
+            fecha = datetime.strptime(fecha + '-1', "%Y-W%W-%w")
+            inicio_semana = fecha - timedelta(days=fecha.weekday())
+            fin_semana = inicio_semana + timedelta(days=7)
+            turnos = Turno.objects.filter(fecha__gte=inicio_semana, fecha__lt=fin_semana, medico=medico.id)
+            fecha_fin = fin_semana
+        else:
+            fecha = datetime.strptime(fecha, '%Y-%m')
+            fecha_limite = fecha + relativedelta.relativedelta(months=1)
+            turnos = Turno.objects.filter(fecha__gte=fecha, fecha__lt=fecha_limite, medico=medico.id)
+
+        #-----------------Turnos agendados-------------
+        turnos_agendados = turnos.filter(~Q(paciente=None))
+        #Turnos Completados
+        turnos_completados = turnos_agendados.filter(completado=True)
+        #turnos Incompletos
+        turnos_incompletos = turnos_agendados.filter(completado=False)
+
+        #---------- Turnos No agendados-----------------
+        turnos_vacios = turnos.filter(paciente=None)
+        #Turnos Completados
+        turnos_no_agendados_completados = turnos_vacios.filter(completado=True)
+        #turnos Incompletos
+        turnos_no_agendados_incompletos = turnos_vacios.filter(completado=False)
+
+
+        #Fecha de creacion del reporte
+        fecha_creacion = datetime.now()
+
+
+        #Crea PDF
+        context = {
+                'tipo':tipo,
+                'user':user, 
+                'medico':medico, 
+                'fecha_creacion':fecha_creacion, 
+                'fecha':fecha, 
+                'fecha_fin':fecha_fin,
+                'turnos_totales':turnos.count(),
+                'turnos_agendados':turnos_agendados.count(),
+                'turnos_completados':turnos_completados.count(),
+                'turnos_incompletos':turnos_incompletos.count(),
+                'turnos_vacios':turnos_vacios.count(),
+                'turnos_vacios_completados':turnos_no_agendados_completados.count(),
+                'turnos_vacios_incompletos':turnos_no_agendados_incompletos.count(),
+            }
+
+        return render(request, 'medicos/formato_reporte.html', context)
+
+        
