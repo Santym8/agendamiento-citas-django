@@ -9,6 +9,9 @@ from django.contrib.auth import logout
 from django.shortcuts import redirect
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Q
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
 #Modelos
 from .models import Medico, Especialidad, Turno
 from django.contrib.auth.models import User, Group
@@ -157,8 +160,29 @@ def eliminar_turno(request, id, fecha_actual):
         turno = None
     if(turno):
         if(turno.paciente):
-            #To-do enviar correo al paciente
-            pass
+            paciente = Paciente.objects.get(id = turno.paciente.id)
+            user_paciente = User.objects.get(id = paciente.user.id)
+            user_medico = User.objects.get(id = medico.user.id)
+            especialidad_medico = Especialidad.objects.get(id=medico.especialidad.id)
+            subject = 'Cancelacion de Cita'
+            template = get_template('medicos/email_cancelacion.html')
+            content = template.render({
+                'paciente': paciente,
+                'user_paciente':user_paciente,
+                'turno':turno,
+                'medico':medico,
+                'user_medico': user_medico,
+                'especialidad_medico':especialidad_medico
+            })
+            message = EmailMultiAlternatives(
+                subject=subject,
+                body='', 
+                from_email=settings.EMAIL_HOST_USER, 
+                to=[user_paciente.email],
+                cc=[]
+            ) 
+            message.attach_alternative(content, 'text/html')
+            message.send()
         turno.delete()  
     return HttpResponseRedirect('/medicos?fecha='+fecha_actual)
 
