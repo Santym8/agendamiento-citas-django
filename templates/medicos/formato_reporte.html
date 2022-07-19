@@ -2,16 +2,55 @@
 <!DOCTYPE html>
 
 
-
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="UTF-8">
     <title>Reporte {{fecha|date:' d-M-Y'}}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
-
+    <!-- <link rel="stylesheet" type="text/css" href="../../static/css/pdf.css"> -->
 </head>
 
-<body id="body" onload="generatePDF()">
+<body id="body"  onload="generatePDF()">
+     <style>
+        #body{
+            min-height: 100vh;
+        }
+        
+        #contenedor_tabla_turno {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 400px;
+        }
+
+        .datatable {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            border: solid 1px black;
+            font-family: "Roboto", sans-serif;
+        }
+
+        .datatable thead tr {
+            background-color: #252525;
+            color: white;
+        }
+
+        .datatable th,
+        .datatable td {
+            padding: 10px;
+        }
+
+        .datatable tr:nth-child(even) {
+            background-color: rgb(97, 97, 97);
+            color: white;
+        }
+
+    </style> 
+    <h1 class="title-pdf">Reporte Turnos</h1>
+    <h3>Información Médico</h3>
     <p>Nombre: {{user.first_name}} {{user.last_name}}</p>
     <p>Correo: {{user.email}}</p>
     <p>Especialidad: {{medico.especialidad}}</p>
@@ -22,51 +61,56 @@
 
     <h3>
         <!-- Titulo del tipo de Reporte -->
-        {% if tipo == 0 %} Reporte Diario {% endif %} {% if tipo == 1 %} Reporte Semanal {% endif %} {% if tipo == 2 %} Reporte Mensual {% endif %}
+        {% if tipo == 0 %} Reporte Diario {% endif %} {% if tipo == 1 %} Reporte Semanal {% endif %} {% if tipo == 2 %}
+        Reporte Mensual {% endif %}
     </h3>
 
-
-    <!-- Tabla de info -->
-    <table>
-        <tr>
-            <!-- Fecha de reporte segun tipo -->
-            {% if tipo == 0 %}
-            <td>Fecha Reporte: {{fecha|date:' d-M-Y'}}</td>
-            {% endif %} {% if tipo == 1 %}
-            <td>Fecha Reporte: {{fecha|date:' d-M-Y'}} hasta {{fecha_fin|date:' d-M-Y'}}</td>
-            {% endif %} {% if tipo == 2 %}
-            <td>Fecha Reporte: {{fecha|date:' M-Y'}}</td>
-            {% endif %}
-        </tr>
-        <tr>
-            <td>Turnos Totales</td>
-            <td>{{turnos_totales}}</td>
-        </tr>
-        <tr>
-            <td>Turnos Agendados</td>
-            <td>{{turnos_agendados}}</td>
-        </tr>
-        <tr>
-            <td>Completados</td>
-            <td>{{turnos_completados}}</td>
-        </tr>
-        <tr>
-            <td>No Completados</td>
-            <td>{{turnos_incompletos}}</td>
-        </tr>
-        <tr>
-            <td>Turnos No Agendados</td>
-            <td>{{turnos_vacios}}</td>
-        </tr>
-        <tr>
-            <td>Completados</td>
-            <td>{{turnos_vacios_completados}}</td>
-        </tr>
-        <tr>
-            <td>No Completados</td>
-            <td>{{turnos_vacios_incompletos}}</td>
-        </tr>
-    </table>
+    <div id="contenedor_tabla_turno">
+        <!-- Tabla de info -->
+        <table class="datatable">
+            <thead>
+                <tr>
+                    <!-- Fecha de reporte segun tipo -->
+                    {% if tipo == 0 %}
+                    <td>Fecha Reporte: {{fecha|date:' d-M-Y'}}</td>
+                    {% endif %} {% if tipo == 1 %}
+                    <td>Fecha Reporte: {{fecha|date:' d-M-Y'}} hasta {{fecha_fin|date:' d-M-Y'}}</td>
+                    {% endif %} {% if tipo == 2 %}
+                    <td>Fecha Reporte: {{fecha|date:' M-Y'}}</td>
+                    {% endif %}
+                    <td></td>
+                </tr>
+            </thead>
+            <tr>
+                <td>Turnos Totales</td>
+                <td>{{turnos_totales}}</td>
+            </tr>
+            <tr>
+                <td>Turnos Agendados</td>
+                <td>{{turnos_agendados}}</td>
+            </tr>
+            <tr>
+                <td>Completados</td>
+                <td>{{turnos_completados}}</td>
+            </tr>
+            <tr>
+                <td>No Completados</td>
+                <td>{{turnos_incompletos}}</td>
+            </tr>
+            <tr>
+                <td>Turnos No Agendados</td>
+                <td>{{turnos_vacios}}</td>
+            </tr>
+            <tr>
+                <td>Completados</td>
+                <td>{{turnos_vacios_completados}}</td>
+            </tr>
+            <tr>
+                <td>No Completados</td>
+                <td>{{turnos_vacios_incompletos}}</td>
+            </tr>
+        </table>
+    </div>
     <script>
         function generatePDF() {
             console.log('sda')
@@ -74,9 +118,9 @@
             doc.fromHTML(document.getElementById("body"), // page element which you want to print as PDF
                 15,
                 15, {
-                    'width': 170 //set width
-                },
-                function(a) {
+                'width': 167 //set width
+            },
+                function (a) {
                     doc.save("HTML2PDF.pdf"); // save file name as HTML2PDF.pdf
                 });
         }
