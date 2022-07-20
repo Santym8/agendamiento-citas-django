@@ -1,0 +1,1 @@
+web: gunicorn agendamiento_citas.wsgi --log-file -
