@@ -1,12 +1,9 @@
-{% extends "pacientes/base.html" %}
-
+{% extends "pacientes/base.html" %} {% load static %}
 <!--  -->
 {% block links %}
 <!-- Links de CCS -->
 
-<link rel="stylesheet" type="text/css" href="../../static/css/cuentaPaciente.css">
-
-{% endblock %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/cuentaPaciente.css' %}"> {% endblock %}
 
 
 
@@ -18,7 +15,7 @@
 <dialog id='modal'>
     <div class='content-modal'>
         <div class='modal-png'>
-            <img class='img-visto' src='../../static/medicos/img/aceptar.png' alt='Visto'>
+            <img class='img-visto' src="{% static 'medicos/img/aceptar.png' %}" alt='Visto'>
         </div>
         <div class='modal-msg'>
             <p>{{mensaje}}</p>

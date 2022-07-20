@@ -1,4 +1,4 @@
-{% extends "pacientes/base.html" %} {% block contenido %}
+{% extends "pacientes/base.html" %}{% load static %} {% block contenido %}
 
 <div class="panelpac-principal">
     <div class="especialidades">
@@ -13,7 +13,7 @@
     <dialog id='modal'>
         <div class='content-modal'>
             <div class='modal-png'>
-                <img class='img-visto' src='../../static/medicos/img/CitasMedicas.png' alt='Visto'>
+                <img class='img-visto' src="{% static 'medicos/img/CitasMedicas.png' %}" alt='Visto'>
             </div>
             <div class='modal-msg'>
                 <p>{{mensaje}}</p>

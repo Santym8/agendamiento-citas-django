@@ -1,4 +1,4 @@
-{% extends "pacientes/base.html" %} {% block contenido %}
+{% extends "pacientes/base.html" %} {% load static %}{% block contenido %}
 
 <div class="panelpac-principal">
     <div class="especialidades">
@@ -13,7 +13,7 @@
     <dialog id='modal'>
         <div class='content-modal'>
             <div class='modal-png'>
-                <img class='img-visto' src='../../static/medicos/img/CitasMedicas.png' alt='Visto'>
+                <img class='img-visto' src="{% static 'medicos/img/CitasMedicas.png' %}" alt='Visto'>
             </div>
             <div class='modal-msg'>
                 <p>{{mensaje}}</p>
@@ -40,7 +40,9 @@
                 {{siguiente_semana}}</a>
         </div>
     </div>
-    <div class="tabla-title"><h4>Turnos Disponibles {{especialidad_mostrada}}</h4></div>
+    <div class="tabla-title">
+        <h4>Turnos Disponibles {{especialidad_mostrada}}</h4>
+    </div>
     <div id="contenedor_tabla_turno">
         <table class="datatable">
             <thead>
@@ -60,8 +62,7 @@
             {% for turno in turnos_dia %}
             <tr>
                 <td>
-                    <a class="agendar-link"
-                        href="agendar_cita/{{turno.id}}/{{fecha_mostrada.day}}-{{fecha_mostrada.month}}-{{fecha_mostrada.year}}/{{especialidad_mostrada}}">
+                    <a class="agendar-link" href="agendar_cita/{{turno.id}}/{{fecha_mostrada.day}}-{{fecha_mostrada.month}}-{{fecha_mostrada.year}}/{{especialidad_mostrada}}">
                         <div class="agendar-div">Agendar</div>
                     </a>
                 </td>

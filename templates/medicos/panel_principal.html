@@ -1,4 +1,4 @@
-{% extends "medicos/base.html" %} {% block links %}{% endblock %} {% block contenido %}
+{% extends "medicos/base.html" %} {% load static %}{% block links %}{% endblock %} {% block contenido %}
 <div class="panelmed-principal">
     <div class="create-date" id="panle_derecha">
         <div id="contenedor_formulario_crear_turno">
@@ -16,7 +16,7 @@
             <dialog id='modal'>
                 <div class='content-modal'>
                     <div class='modal-png'>
-                        <img class='img-visto' src='../../static/medicos/img/CitasMedicas.png' alt='Visto'>
+                        <img class='img-visto' src="{% static 'medicos/img/CitasMedicas.png' %}" alt='Visto'>
                     </div>
                     <div class='modal-msg'>
                         <p>{{form_crear_turno.fecha.errors}}</p>
@@ -77,7 +77,7 @@
                 <td>{{pacientes|get_value:turno.id}}</td>
                 <td class="delete-td">
                     <a class="delete-link" href="eliminar-turno/{{turno.id}}/{{fecha_mostrada.day}}-{{fecha_mostrada.month}}-{{fecha_mostrada.year}}">
-                        <div class="delete"><img class="img-delete" src="../../static/medicos/img/delete-icon-png-19.jpg"></div>
+                        <div class="delete"><img class="img-delete" src="{% static 'medicos/img/delete-icon-png-19.jpg' %}"></div>
                     </a>
                 </td>
             </tr>

@@ -1,11 +1,9 @@
-{% extends "medicos/base.html" %}
+{% extends "medicos/base.html" %}{% load static %}
 <!--  -->
 {% block links %}
 <!-- Links de CCS -->
 
-<link rel="stylesheet" type="text/css" href="../../static/css/cuentaMedico.css">
-
-{% endblock %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/cuentaMedico.css' %}"> {% endblock %}
 
 
 <!-- Bloque de contenido -->
@@ -16,7 +14,7 @@
 <dialog id='modal'>
     <div class='content-modal'>
         <div class='modal-png'>
-            <img class='img-visto' src='../../static/medicos/img/aceptar.png' alt='Visto'>
+            <img class='img-visto' src="{% static 'medicos/img/aceptar.png' %}" alt='Visto'>
         </div>
         <div class='modal-msg'>
             <p>{{mensaje}}</p>
@@ -42,9 +40,7 @@
     <div class="contenido-formulario">
         {% csrf_token %} {% for campo in formulario_actualizacion %}
         <div class="form-campo">
-            {{ campo.errors }}
-            {{ campo.label_tag }}
-            {{ campo }}
+            {{ campo.errors }} {{ campo.label_tag }} {{ campo }}
         </div>
         {% endfor %}
     </div>
@@ -60,9 +56,7 @@
     <div class="contenido-formulario">
         {% csrf_token %} {% for campo in formulario_cambiar_contraseña %}
         <div class="form-campo">
-            {{ campo.errors }} 
-            {{ campo.label_tag }} 
-            {{ campo }}
+            {{ campo.errors }} {{ campo.label_tag }} {{ campo }}
         </div>
         {% endfor %}
     </div>
