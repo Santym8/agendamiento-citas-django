@@ -2,7 +2,7 @@
 <!--  -->
 {% block links %}
 <!-- Links de CCS -->
-
+<link rel="stylesheet" type="text/css" href="../../static/css/reportes.css">
 
 
 {% endblock %}
@@ -10,28 +10,34 @@
 
 <!-- Bloque de contenido -->
 {% block contenido %}
-
-<!-- Reporte Diario  -->
-<div class="reporte-diario">
-    <h3>Reporte Diario</h3>
-    <input type="date" id="date">
-    <button id="reporte-diario">Ver</button>
+<div class="img-encabezado">
+    <img id="Imagen-Medico" src="{% static '\medicos\img\contact-shape3.png' %}" alt="" />
 </div>
-
-<!-- Reporte Semanal  -->
-<div class="reporte-semanal">
-    <h3>Reporte Semanal</h3>
-    <input type="week" id="week">
-    <button id="reporte-semanal">Ver</button>
+<div class="img-pie">
+    <img id="Imagen-pie" src="{% static '\medicos\img\contact-shape4.png' %}" alt="" />
 </div>
+<div class="content-reportes">
+    <!-- Reporte Diario  -->
+    <div class="reporte-diario">
+        <h3>Reporte Diario</h3>
+        <input class="fecha-input" type="date" id="date">
+        <button class="reporte-button" id="reporte-diario">Ver</button>
+    </div>
 
-<!-- Reporte Mensual  -->
-<div class="reporte-mensual">
-    <h3>Reporte Mensual</h3>
-    <input type="month" id="month">
-    <button id="reporte-mensual">Ver</button>
+    <!-- Reporte Semanal  -->
+    <div class="reporte-semanal">
+        <h3>Reporte Semanal</h3>
+        <input class="fecha-input" type="week" id="week">
+        <button class="reporte-button" id="reporte-semanal">Ver</button>
+    </div>
+
+    <!-- Reporte Mensual  -->
+    <div class="reporte-mensual">
+        <h3>Reporte Mensual</h3>
+        <input class="fecha-input" type="month" id="month">
+        <button class="reporte-button" id="reporte-mensual">Ver</button>
+    </div>
 </div>
-
 {% endblock %} {% block scripts %}
 <script src="{% static 'js\reportes.js' %}"></script>
 {% endblock %}

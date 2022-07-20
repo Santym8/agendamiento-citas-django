@@ -1,0 +1,55 @@
+.content-reportes {
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    color: brown;
+}
+
+.content-reportes div {
+    margin: 35px auto;
+}
+.fecha-input{
+    margin-top: 10px;
+    width: 200px;
+    min-width: 100px;
+    border: 1px solid #320b0ba2;
+    border-radius: 5px;
+    cursor: pointer;
+    color:  #320b0b;
+}
+.reporte-button {
+    margin: 0px 20px;
+    width: 60px;
+    border: 1px solid #320b0ba2;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.reporte-button:hover{
+    background-color: #851717;
+    color: white;
+}
+.img-encabezado {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40%;
+}
+
+#Imagen-Medico {
+    border: 0;
+    max-width: 100%;
+    height: auto;
+}
+
+.img-pie {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40%;
+}
+
+#Imagen-pie {
+    border: 0;
+    max-width: 100%;
+    height: auto;
+}

@@ -3,126 +3,185 @@
 
 
 <html>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="UTF-8">
     <title>Reporte {{fecha|date:' d-M-Y'}}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
-    <!-- <link rel="stylesheet" type="text/css" href="../../static/css/pdf.css"> -->
+    <script type="text/javascript" src="http://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <script type="text/javascript" src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 
-<body id="body"  onload="generatePDF()">
-     <style>
-        #body{
-            min-height: 100vh;
-        }
-        
-        #contenedor_tabla_turno {
-            width: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-width: 400px;
-        }
-
-        .datatable {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            border: solid 1px black;
-            font-family: "Roboto", sans-serif;
-        }
-
-        .datatable thead tr {
-            background-color: #252525;
-            color: white;
-        }
-
-        .datatable th,
-        .datatable td {
-            padding: 10px;
-        }
-
-        .datatable tr:nth-child(even) {
-            background-color: rgb(97, 97, 97);
-            color: white;
-        }
-
-    </style> 
-    <h1 class="title-pdf">Reporte Turnos</h1>
-    <h3>Información Médico</h3>
-    <p>Nombre: {{user.first_name}} {{user.last_name}}</p>
-    <p>Correo: {{user.email}}</p>
-    <p>Especialidad: {{medico.especialidad}}</p>
-    <p>Dirección: {{medico.direccion}}</p>
-    <p>Número Celular: {{medico.numero_celular}}</p>
-    <p>Fecha de Generación de Reporte: {{fecha_creacion}} </p>
-
-
-    <h3>
-        <!-- Titulo del tipo de Reporte -->
-        {% if tipo == 0 %} Reporte Diario {% endif %} {% if tipo == 1 %} Reporte Semanal {% endif %} {% if tipo == 2 %}
-        Reporte Mensual {% endif %}
-    </h3>
-
-    <div id="contenedor_tabla_turno">
-        <!-- Tabla de info -->
-        <table class="datatable">
-            <thead>
-                <tr>
-                    <!-- Fecha de reporte segun tipo -->
-                    {% if tipo == 0 %}
-                    <td>Fecha Reporte: {{fecha|date:' d-M-Y'}}</td>
-                    {% endif %} {% if tipo == 1 %}
-                    <td>Fecha Reporte: {{fecha|date:' d-M-Y'}} hasta {{fecha_fin|date:' d-M-Y'}}</td>
-                    {% endif %} {% if tipo == 2 %}
-                    <td>Fecha Reporte: {{fecha|date:' M-Y'}}</td>
-                    {% endif %}
-                    <td></td>
-                </tr>
-            </thead>
-            <tr>
-                <td>Turnos Totales</td>
-                <td>{{turnos_totales}}</td>
-            </tr>
-            <tr>
-                <td>Turnos Agendados</td>
-                <td>{{turnos_agendados}}</td>
-            </tr>
-            <tr>
-                <td>Completados</td>
-                <td>{{turnos_completados}}</td>
-            </tr>
-            <tr>
-                <td>No Completados</td>
-                <td>{{turnos_incompletos}}</td>
-            </tr>
-            <tr>
-                <td>Turnos No Agendados</td>
-                <td>{{turnos_vacios}}</td>
-            </tr>
-            <tr>
-                <td>Completados</td>
-                <td>{{turnos_vacios_completados}}</td>
-            </tr>
-            <tr>
-                <td>No Completados</td>
-                <td>{{turnos_vacios_incompletos}}</td>
-            </tr>
-        </table>
+<body id="body" onload="genPDF()">
+    <div class="img-encabezado">
+        <img id="Imagen-Medico" src="{% static '\medicos\img\contact-shape3.png' %}" alt="" />
     </div>
-    <script>
-        function generatePDF() {
-            console.log('sda')
-            var doc = new jsPDF(); //create jsPDF object
-            doc.fromHTML(document.getElementById("body"), // page element which you want to print as PDF
-                15,
-                15, {
-                'width': 167 //set width
-            },
-                function (a) {
-                    doc.save("HTML2PDF.pdf"); // save file name as HTML2PDF.pdf
-                });
+    <div class="img-pie">
+        <img id="Imagen-pie" src="{% static '\medicos\img\contact-shape4.png' %}" alt="" />
+    </div>
+    <div class="contentPDF" id="contPDF" onload="">
+        <style>
+            #body {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            canvas {
+                display: none;
+            }
+
+            #contPDF {
+                width: 725px;
+                min-width: 725px;
+            }
+
+            .img-encabezado {
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 40%;
+            }
+
+            #Imagen-Medico {
+                border: 0;
+                max-width: 100%;
+                height: auto;
+            }
+
+            .img-pie {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 40%;
+            }
+
+            #Imagen-pie {
+                border: 0;
+                max-width: 100%;
+                height: auto;
+            }
+            .head{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .img-logo {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 5%;
+            }
+
+            #logo {
+                max-width: 100%;
+                margin-right: 50px;
+            }
+
+            #contenedor_tabla_turno {
+                width: 100%;
+            }
+
+            .datatable {
+                width: 100%;
+                border-collapse: collapse;
+                text-align: left;
+                border: solid 1px black;
+                font-family: "Roboto", sans-serif;
+            }
+
+            .datatable thead tr {
+                background-color: #252525;
+                color: white;
+            }
+
+            .datatable th,
+            .datatable td {
+                padding: 10px;
+            }
+
+            .datatable tr:nth-child(even) {
+                background-color: rgb(97, 97, 97);
+                color: white;
+            }
+
+            .title-pdf {
+                text-align: center;
+            }
+        </style>
+        <div class="head">
+            <div class="img-logo">
+                <img id="logo" src="{% static '\medicos\img\CitasMedicas.png' %}" alt="" />
+            </div>
+            <h1 class="title-pdf">Reporte Turnos</h1>
+        </div>
+        <h3>Información Médico</h3>
+        <p>Nombre: {{user.first_name}} {{user.last_name}}</p>
+        <p>Correo: {{user.email}}</p>
+        <p>Especialidad: {{medico.especialidad}}</p>
+        <p>Dirección: {{medico.direccion}}</p>
+        <p>Número Celular: {{medico.numero_celular}}</p>
+        <p>Fecha de Generación de Reporte: {{fecha_creacion}} </p>
+
+        <div id="contenedor_tabla_turno">
+            <!-- Tabla de info -->
+            <table class="datatable">
+                <thead>
+                    <tr>
+                        <!-- Fecha de reporte segun tipo -->
+                        {% if tipo == 0 %}
+                        <td>Fecha Reporte: {{fecha|date:' d-M-Y'}}</td>
+                        {% endif %} {% if tipo == 1 %}
+                        <td>Fecha Reporte: {{fecha|date:' d-M-Y'}} hasta {{fecha_fin|date:' d-M-Y'}}</td>
+                        {% endif %} {% if tipo == 2 %}
+                        <td>Fecha Reporte: {{fecha|date:' M-Y'}}</td>
+                        {% endif %}
+                        <td></td>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>Turnos Totales</td>
+                    <td>{{turnos_totales}}</td>
+                </tr>
+                <tr>
+                    <td>Turnos Agendados</td>
+                    <td>{{turnos_agendados}}</td>
+                </tr>
+                <tr>
+                    <td>Completados</td>
+                    <td>{{turnos_completados}}</td>
+                </tr>
+                <tr>
+                    <td>No Completados</td>
+                    <td>{{turnos_incompletos}}</td>
+                </tr>
+                <tr>
+                    <td>Turnos No Agendados</td>
+                    <td>{{turnos_vacios}}</td>
+                </tr>
+                <tr>
+                    <td>Completados</td>
+                    <td>{{turnos_vacios_completados}}</td>
+                </tr>
+                <tr>
+                    <td>No Completados</td>
+                    <td>{{turnos_vacios_incompletos}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function genPDF() {
+            html2canvas(document.getElementById("contPDF")).then(function (canvas) {
+                document.body.appendChild(canvas);
+                var imagen = canvas.toDataURL("image/png");
+                var doc = new jsPDF();
+                doc.addImage(imagen, "PNG", 10, 10);
+                doc.save("Reporte.pdf");
+            });
         }
     </script>
 </body>
