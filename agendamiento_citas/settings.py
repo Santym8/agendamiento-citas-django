@@ -161,9 +161,9 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 #------------------Credenciales Gmail--------------------------
-EMAIL_HOST_USER = 'correo@gmail.com'
-DEFAULT_FROM_EMAIL = 'NombreDelRemitente'
-EMAIL_HOST_PASSWORD = 'contraseña' #past the key or password app here
+EMAIL_HOST_USER = 'correo@gmail.com' #Correo
+DEFAULT_FROM_EMAIL = 'NombreDelRemitente' #Nombre del remitente del Correo
+EMAIL_HOST_PASSWORD = 'contraseña' #Contraseña
 #----------------------------------------------------------------
 
 LOGIN_URL = 'login'
